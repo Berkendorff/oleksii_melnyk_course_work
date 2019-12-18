@@ -1,0 +1,41 @@
+main{
+	background-color: var(--motivation-color);
+}
+
+
+.description{
+	background-color: var(--motivation-color);
+}
+
+.dedication{
+	background-color: var(--header-color);
+}
+
+.vork-types-img{
+	width: 50px;
+	height: 50px;
+}
+
+.thankyou-img{
+	height: 200px;
+	width: 400px;
+	max-height: 400px;
+	max-width: 800px;
+
+}
+.vork-button{
+	background-color: var(--header-color);
+}
+
+	.vork-button:hover{
+		background-color: var(--header-color-hover); 
+	}
+
+.p-motivate{
+	background-color: var(--motivation-color-hover);
+}
+
+.carousel-item{
+	height: 640px;
+	width: 960px;
+}

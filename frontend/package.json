@@ -6,11 +6,16 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Berkendorff",
   "license": "ISC",
   "description": "",
   "devDependencies": {
     "webpack": "^4.41.3",
     "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "bootstrap": "^4.4.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.16.0"
   }
 }

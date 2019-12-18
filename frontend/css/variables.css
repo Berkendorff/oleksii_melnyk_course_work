@@ -1,0 +1,13 @@
+/*non break space - &nbsp;*/
+
+:root{
+	--header-color: #98012e;
+	/*--less-header-color: #48012e;*/
+	--header-color-hover: #d8012e;
+	--header-color-active: #88012e;
+	--motivation-color: #89c5c3;
+	--motivation-color-hover: #09c5c3;
+	--white: white;
+	--black: black;
+	--main-gray: #a5c5c5;
+}
