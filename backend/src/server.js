@@ -18,13 +18,7 @@ const htmlBadGateWay = 'src/test.html';
 
 
 
-const mysqlOpt = mysql.createConnection({
-	host : "zanner.org.ua",
-	port : 33321,
-	user : "ka7507",
-	password : "380937307720",
-	database : "ka7507"
-});
+
 
 var loginUserSQL = `loginUser("${userEmail}", "${userPassword}")`;
 var queryLoginUser = `select ${loginUserSQL};` ;
