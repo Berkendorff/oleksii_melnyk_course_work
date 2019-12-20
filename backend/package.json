@@ -4,12 +4,13 @@
   "description": "back-end for cw",
   "main": "src/server.js",
   "scripts": {
-    "test": "node src/server.js",
+    "start": "node src/server.js",
     "client": "node src/client.js"
   },
   "author": "Berkendorff",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^3.0.1",
     "http-server": "^0.12.0",
     "mysql": "^2.17.1"
   }

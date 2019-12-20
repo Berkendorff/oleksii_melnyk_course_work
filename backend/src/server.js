@@ -1,5 +1,7 @@
 
-const port = 8080;
+//oleksii_melnyk_course_work
+
+const port = process.env.PORT || 8080;
 const host = '0.0.0.0';
 
 const fs = require('fs');
@@ -15,7 +17,13 @@ const htmlBadGateWay = 'src/test.html';
 // const cssFooter = 'frontend/css/footer.css';
 // const cssRequired = 'frontend/css/required.css';
 // const imgLogo = 'frontend/img/logo.png';
-
+const mysqlOpt = mysql.createConnection({
+	host : "zanner.org.ua",
+	port : 33321,
+	user : "ka7507",
+	password : "380937307720",
+	database : "ka7507"
+});
 
 
 
