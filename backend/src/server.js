@@ -8,6 +8,7 @@ const mysql = require('mysql');
 var http = require('http');
 var url = require('url');
 const htmlIndex = 'index.html';
+const htmlBadGateWay = 'src/test.html';
 // const cssHeader = 'frontend/css/header.css';
 // const cssVariables = 'frontend/css/variables.css';
 // const cssIndexMain = 'frontend/css/main.css';
@@ -32,7 +33,7 @@ var userEmail = "berk@gmail.com";
 var userPassword = "1234556";
 
 http.createServer(function (req, res){
-	log(req.url + ' = '+req.url.replace('/',' '));
+	log(req.url + ' = '+req.url.replace('/',''));
 	try{
 		let reqUrl = req.url.replace('/', '');
 		
@@ -47,20 +48,20 @@ http.createServer(function (req, res){
 		} else {
 			log(reqUrl + ' - exists : ' + FileExists(reqUrl));
 			res.writeHead(404, {'Content-Type': 'text/html'});
-			fs.createReadStream('src/test.html').pipe(res);
+			fs.createReadStream(htmlBadGateWay).pipe(res);
 		}	
 	}
 	catch(err){
 		res.writeHead(404, {'Content-Type': 'text/html'});
-		fs.createReadStream('src/test.html').pipe(res);
+		fs.createReadStream(htmlBadGateWay).pipe(res);
 		log(err);
 	}
-}).listen(8080); 
+}).listen(port); 
 
 
 function ContentTypeOfUrl(url){
 	if (url.indexOf('.css') >=0){
-		return 'stylesheet';
+		return 'text/css';
 	}
 	if (url.indexOf('.js') >=0){
 		return 'text/script';
@@ -74,7 +75,7 @@ function FileExists(pathFile){
 	}
 	return 0;
 }
-//
+
 
 // http.createServer(function(req, res){
 //     if (req.url === '/') {
