@@ -2,17 +2,14 @@ header {
     background-color: var(--header-color);
 }
 
+.auth>div>a:hover{
+	background-color: var(--header-color-hover);
+}
+
 .logo{
 	outline: none;
 	width: 64px;
 	height: 64px;
-}
-
-
-.login:hover{
-	background-color: var(--header-color-hover);
-	/*font-width: bold;*/
-	/*transition: none;*/
 }
 
 .dropdown-img{
