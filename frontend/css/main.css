@@ -127,25 +127,25 @@ section {
     box-sizing: border-box;
 }
 section.sec1 {
-    background: url(https://www.planwallpaper.com/static/images/1730832.jpg);
+    background: url('https://www.planwallpaper.com/static/images/1730832.jpg');
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
 }
 section.sec2 {
-    background: url(https://www.hdwallpapers.in/walls/autumn_bench-HD.jpg);
+    background: url('https://www.hdwallpapers.in/walls/autumn_bench-HD.jpg');
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
 }
 section.sec3 {
-    background: url(https://i.pinimg.com/originals/18/14/9a/18149afc5f3901fc22be42aef0d1463c.jpg);
+    background: url('https://i.pinimg.com/originals/18/14/9a/18149afc5f3901fc22be42aef0d1463c.jpg');
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
 }
 section.sec4 {
-    background: url(https://www.planwallpaper.com/static/images/cool-wallpaper-5_G6Qe1wU.jpg);
+    background: url('https://www.planwallpaper.com/static/images/cool-wallpaper-5_G6Qe1wU.jpg');
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;

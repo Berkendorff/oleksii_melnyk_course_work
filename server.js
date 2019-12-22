@@ -6,6 +6,7 @@
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
+const mysql = require('./config');
 // const express = require('express');
 // const bodyParser = require('body-parser');
 
@@ -23,7 +24,6 @@ const restrictedDirs = ['src'];
 // const authenticateController=require('./controllers/authenticate-controller');
 // const registerController=require('./controllers/register-controller');
 const app = require('./app');
-
 
 
 

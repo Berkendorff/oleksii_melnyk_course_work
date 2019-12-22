@@ -6,7 +6,7 @@ const host = '0.0.0.0';
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const connection = require('./config');
+const mysql = require('./config');
 const authenticateController=require('./controllers/authenticate-controller');
 const registerController=require('./controllers/register-controller');
 var app = express();
@@ -15,6 +15,7 @@ var app = express();
 const html = 'frontend/html/';
 const css = 'frontend/css/';
 const img = 'frontend/img/';
+const js = 'frontend/script/';
 const Index = html + 'index.html';
 const BadGateWay = html + 'test.html';
 
@@ -91,6 +92,31 @@ app.get('/img/dropdown.png', function (req, res) {
    res.sendFile( __dirname + "/" + img + "dropdown.png" );  
 });
 
+/*
+Send js
+*/
+
+
+
+app.get('/script/findVorks.js', function (req, res) {  
+   res.sendFile( __dirname + "/" + js + "findVorks.js" );  
+});
+
+
+app.get('/getVorksQuery',function (req, res) {  
+   mysql.query('select * from vorks;', 
+      function(err,rows, fields){
+            if (err) {
+               res.writeHead(404,{'Content-type':'text/html'});
+               res.end(err);
+               throw err;
+            }
+            res.writeHead(200,{'Content-type':'text/plain'});
+            // log(rows);
+            res.end(JSON.stringify(rows));            
+         });
+});
+
 
 
 app.get('*', function (req, res) {  
@@ -102,3 +128,29 @@ app.get('*', function (req, res) {
 app.listen(port);
 
 module.exports = app;
+
+
+// function getVorks(){
+//    mysql.query('select * from vorks;', 
+//       function(err,rows, fields){
+//             if (err) {
+//                res.writeHead(404,{'Content-type':'text/html'});
+//                res.end(err);
+//                throw err;
+//             }
+//             res.writeHead(200,{'Content-type':'text/plain'});
+//             // log(rows);
+//             res.end(JSON.stringify(rows));            
+//          });
+// }
+
+// function httpGetAsync(theUrl, callback)
+// {
+//     var xmlHttp = new XMLHttpRequest();
+//     xmlHttp.onreadystatechange = function() { 
+//         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+//             callback(xmlHttp.responseText);
+//     }
+//     xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+//     xmlHttp.send(null);
+// }

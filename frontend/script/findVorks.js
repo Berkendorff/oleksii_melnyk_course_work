@@ -13,29 +13,37 @@ function getVorks(){
 		// console.log();
 		for (let vork in vorks){
 			let htmlVork= 
-			`<div class="vork rounded m-3">\
-				<div class="d-inline-block">\
-				<div class="d-flex justify-content-center rounded-top bg-primary">\
-					<img src="frontend/img/logo.png" alt="" class="vork-img">\
-				</div>\
-				<div class="d-flex text-center flex-wrap justify-content-center rounded-bottom bg-secondary">\
-					<span class="container ">${vorks[vork].vork_name}</span>\
-					<span class="container">${vorks[vork].vork_desc}</span>\
-					<span class="container">${vorks[vork].vork_needs}</span>\
-				</div>\
-			</div>`;
+			`
+			<div class="vork rounded d-flex border-primary w-100 m-3"  >
+				<div class="">
+					<img src="../img/logo.png" alt="" class="vork-img rounded-left border-primary rounded	">
+				</div>
+				<div class="d-flex flex-wrap w-100">
+					<div class="col-12 d-flex flex-wrap align-items-center flex-wrap vork-info justify-content-between ">
+						<p class="col-5 rounded m-2 text-white ">Vork: ${vorks[vork].vork_name}</p>
+						<p class="col-5 rounded m-2 text-white ">Desc: ${vorks[vork].vork_desc}</p>
+						<p class="col-5 rounded m-2 text-white ">Vorker: ${vorks[vork].vork_creator_id}</p>
+						<p class="col-5 rounded m-2 text-white ">Needs: ${vorks[vork].vork_needs}</p>
+					</div>
+				</div>
+			</div>
+			`;
+
+		
+			// `<div class="vork rounded m-3">\
+			// 	<div class="">\
+			// 	<div class="d-flex justify-content-center rounded-top bg-primary">\
+			// 		<img src="img/logo.png" alt="logo" class="vork-img">\
+			// 	</div>\
+			// 	<div class="d-flex text-center flex-wrap justify-content-center rounded-bottom bg-secondary">\
+			// 		<span class="container">${vorks[vork].vork_name}</span>\
+			// 		<span class="container">${vorks[vork].vork_desc}</span>\
+			// 		<span class="container">${vorks[vork].vork_needs}</span>\
+			// 	</div>\
+			// </div>`;
 			$('.canvas').append(htmlVork);
 		}
-
-		
-
-		
-
 	});
-
-	// axios.get('/getVorks').then((response) => {
-	// 	console.log(response);
-	// }, (error)=>{console.log(error);} );
 }
 
 function httpGetAsync(theUrl, callback)
