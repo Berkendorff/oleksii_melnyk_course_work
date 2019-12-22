@@ -1,5 +1,6 @@
 header {
     background-color: var(--header-color);
+    /*height: 15vh;*/
 }
 
 .auth>div>a:hover{
@@ -34,3 +35,5 @@ header {
 .closeModal{
 	font-size: 50px;
 }
+
+
