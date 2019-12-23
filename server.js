@@ -6,7 +6,7 @@
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
-const mysql = require('./config');
+const mysql = require('./sql');
 // const express = require('express');
 // const bodyParser = require('body-parser');
 

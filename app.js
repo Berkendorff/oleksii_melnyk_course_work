@@ -6,7 +6,7 @@ const host = '0.0.0.0';
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('./config');
+const mysql = require('./sql');
 const authenticateController=require('./controllers/authenticate-controller');
 const registerController=require('./controllers/register-controller');
 var app = express();
@@ -33,7 +33,9 @@ console.log(authenticateController);
 app.post('/controllers/register-controller', registerController.register);
 app.post('/controllers/authenticate-controller', authenticateController.authenticate);
 
-
+/*
+Send html
+*/
 
 app.get('/', function (req, res) {  
    res.sendFile( __dirname + "/" + Index );  
