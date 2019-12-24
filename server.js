@@ -1,14 +1,11 @@
 
 //oleksii_melnyk_course_work
 
-
-
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
 const mysql = require('./sql');
-// const express = require('express');
-// const bodyParser = require('body-parser');
+const app = require('./app');
 
 
 const html = 'frontend/html/';
@@ -17,28 +14,6 @@ const img = 'frontend/img/';
 const Index = html + 'index.html';
 const BadGateWay = html + 'test.html';
 const restrictedDirs = ['src'];
-
-
-// console.log(__dirname);
-// const connection = require('./config');
-// const authenticateController=require('./controllers/authenticate-controller');
-// const registerController=require('./controllers/register-controller');
-const app = require('./app');
-
-
-
-
-// function connectMysql(){
-// 	mysqlConn.connect(function(err){
-// 		if (err) throw err;
-// 		console.log("Connected!!!");
-// 	});
-// }
-
-// function disconnectMysql(){
-// 	mysqlConn.end();
-// }
-
 
 
 // var loginUserSQL = `loginUser("${userEmail}", "${userPassword}")`;
@@ -142,83 +117,6 @@ function loginUser(email,password){
 
 	});
 }
-
-
-
-
-
-// http.createServer(function(req, res){
-//     if (req.url === '/') {
-//         res.writeHead(200, {'Content-Type': 'text/html'});
-//         fs.createReadStream('pages/index.html').pipe(res);
-//     } 
-//     else if (req.url === '/css/theme.css') {
-//         res.writeHead(200, {'Content-Type': 'text/css'});
-//         fs.createReadStream('css/theme.css').pipe(res);
-//     } 
-//     else if (req.url === '/data') {
-//     	res.writeHead(200, {'Content-Type': 'text/html'});
-// 		console.log("before exports");
-		
-// 		exports.connection.query('SELECT * FROM countryinfo;', function(error, results) {
-// 		    console.log("inside exports");
-// 		    let str = '<head><link rel="stylesheet" type="text/css" href="css/theme.css"></head><body><p>hello iasa!</p>';
-	
-// 		    if (error) throw error
-// 		    try {
-// 		    	str += '<table>';
-// 		    	for(var key in results){
-// 			    	const data = JSON.parse(results[key].doc);
-// 			      	  str += '<tr>';
-// 			        str += '<td>'+ data.Name+'</td>';
-// 			        str += '<td>'+ data.geography.Continent+'</td>';
-// 			        str += '<td>'+ data.geography.SurfaceArea+'</td>';
-// 			      	str += '</tr>';
-// 			    	console.log(data);
-// 		    	}
-// 		      	str += '</table>';
-// 		    } 
-// 		    catch(err) {
-// 		      console.error(err)
-// 			    } 
-// 			str += "</body>";
-// 			res.write(str);  
-// 		    console.log(results); // [{2: 2}]
-// 		    });
-//     }
-//     else{
-//         res.writeHead(404, {'Content-Type': 'text/html'});
-//         fs.createReadStream('pages/404.html').pipe(res);
-//     }    
-//  }).listen(port);
-
-
-// var server = net.createServer(function(socket) {
-// 	socket.write('Echo server\r\n');
-// 	socket.pipe(socket);
-// 	socket.on('error', function(err){
-// 		console.log(err.toString());
-// 	})
-// 	socket.on('')
-// });
-// server.listen(port, host);
-
-
-
-
-// function loginUser(enail, password){
-// 	mysqlOpt.query(queryLoginUser, function(err,rows,fields){
-// 	if(err) throw err;
-// 	var queryLoginUser = `select loginUser("${userEmail}", "${userPassword}");` ;
-// 	// console.log(rows);
-// 	// for (var i in rows) {
-// 	// 	console.log("Post titles: ", rows[i]);
-// 	// }
-// 	Object.keys(rows).forEach(function(key){
-// 		console.log(rows[key]);
-// 	});
-// });
-// }
 
 function log(str){
 	console.log(str);
