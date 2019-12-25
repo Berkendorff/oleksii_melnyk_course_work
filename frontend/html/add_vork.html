@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="../css/variables.css">
 	<link rel="stylesheet" href="../css/required.css">
 	<link rel="stylesheet" href="../css/header.css">
-	<!-- <link rel="stylesheet" href="../css/main.css"> -->
+	<link rel="stylesheet" href="../css/add_vork.css">
 	<link rel="stylesheet" href="../css/footer.css">
 
 	<link rel="icon" type="img" href="../img/logo.png">
@@ -17,16 +17,9 @@
 	
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">		
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">		
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-
-	<link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/universal/2-0-1/vendor/font-awesome/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans|Raleway&amp;display=swap" rel="stylesheet">
 </head>
-<body  onload="getCookie();">
-
-<!-- onload="checkCookie("token");" -->
+<body  onload="correctNavBar();">
 <!-- 
 Modal Menu Log in
  -->
@@ -44,15 +37,15 @@ Modal Menu Log in
 						<form method='POST' action="/controllers/authenticate-controller" onsubmit="login()">
 							<div class="form-group">
 								<label for="inputEmail" class="">
-									Email address								
+									Email address	
 								</label>
-								<input name="email" type="email" class="form-control" id="inputEmail" aria-descridby="emailHelp" placeholder="example@e.mail" required="true">
+								<input maxlength="256" name="email" type="email" class="form-control" id="inputEmail" aria-descridby="emailHelp" placeholder="example@e.mail" required="true">
 							</div>
 							<div class="form-group">
 								<label for="inputPassword" class="">
 								Password
 								</label>
-								<input name="password" type="password" class="form-control" id="inputPassword" placeholder="p@ssw0rd"  required="true">
+								<input maxlength="256" name="password" type="password" class="form-control" id="inputPassword" placeholder="p@ssw0rd"  required="true">
 							</div>
 							<div class="d-flex justify-content-center">
 								<button type="submit" class="btn btn-primary m-2">Submit</button>
@@ -82,22 +75,22 @@ Modal Menu Sign Up
 						<form action="/api/register" method="POST">
 							<div class="form-group">
 								<label for="inputEmail" class="">Nickname<span class="text-danger">*</span></label>
-								<input name="user_name"  type="text" class="form-control" id="inputNickname" aria-descridby="nicknameHelp" placeholder="exampleName" required="true">
+								<input maxlength="256" name="user_name"  type="text" class="form-control" id="inputNickname" aria-descridby="nicknameHelp" placeholder="exampleName" required="true">
 								<small id="nicknameHelp" class="form-text text-muted">Enter your nickname</small>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail" class="">Email address<span class="text-danger">*</span></label>
-								<input name="user_email" type="email" class="form-control" id="inputEmail" aria-descridby="emailHelp" placeholder="example@e.mail" required="true">
+								<input maxlength="256" name="user_email" type="email" class="form-control" id="inputEmail" aria-descridby="emailHelp" placeholder="example@e.mail" required="true">
 								<small id="emailHelp" class="form-text text-muted">Enter your email</small>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword" class="">Password<span class="text-danger">*</span></label>
-								<input name="user_password" type="password" class="form-control" id="inputPassword" placeholder="Password" required="true">
+								<input maxlength="256" name="user_password" type="password" class="form-control" id="inputPassword" placeholder="Password" required="true">
 								 
 							</div>
 							<div class="form-group">
 								<label for="inputPassword" class="">Repeat password<span class="text-danger">*</span></label>
-								<input name="user_password_check" type="password" class="form-control" id="inputPassword" placeholder="Password" required="true">
+								<input maxlength="256" name="user_password_check" type="password" class="form-control" id="inputPassword" placeholder="Password" required="true">
 								<small id="passwordHelp" class="form-text text-muted">Password have to consider more ther 8 characters </small>
 							</div>
 							</div>
@@ -119,31 +112,23 @@ Modal Menu Sign Up
 					<a href=" index.html" class="logo text-light d-block order-first">
 						<img src="../img/logo.png" alt="logo" class="logo">
 					</a>
-					<div class="auth d-flex flex-wrap justify-content-center ">
-						<div class="d-none d-flex justify-content-center m-2 logout" id="logout">
-							<a href="/logout" class="btn btn-block text-light logout">Log&nbsp;out</a>
-						</div>
-						<div class="d-flex justify-content-center m-2 login">
-							<a href="#" class="btn btn-block text-light login" data-toggle="modal" data-target="#loginModal">Log&nbsp;in</a>
-						</div>
-						<div class="d-flex justify-content-center m-2 signup">
-							<a href="#" class="btn btn-block bg-primary text-light signup" data-toggle="modal" data-target="#signupModal">Sign&nbsp;up</a>
-						</div>
+					<div class="auth d-flex flex-wrap justify-content-end m-3 log-btn">
+						
 					</div>
 				</div>
 			
 			</div>
 		<div class="container d-flex justify-content-center">
 			<ul class=" nav-list d-none d-md-flex justify-content-between m-0">
-		      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center text-white rounded nav-link ">Local&nbsp;vorks</a></li>
 		      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center text-white rounded nav-link ">Global&nbsp;vorks</a></li>
 		      <li class="d-flex justify-content-center p-0 "><a href="add_vork.html" class="text-center text-white rounded nav-link ">Add&nbsp;vork</a></li>
+		      <li class="d-flex justify-content-center p-0 "><a href="profile.html" class="text-center text-white rounded nav-link ">Profile</a></li>
 		      <li class="d-flex justify-content-center p-0 "><a href="about_us.html" class="text-center text-white rounded nav-link ">About&nbsp;us</a></li>
 		      <li class="d-flex justify-content-center p-0 "><a href="contacts.html" class="text-center text-white rounded nav-link ">Contacts</a></li>
 			</ul>
 
 			<!-- <div class="col-4 text-center">3</div> -->
-			<div class="col-sm-12 text-center d-md-none d-lg-none d-xl-none">
+			<span class=" text-center d-md-none d-lg-none d-xl-none m-3">
 				<div class="dropdown col-md-4">
 				    <button class="btn btn-block dropdown" type="button" data-toggle="dropdown">
 				    	<a href="#" class="d-flex justify-content-center">
@@ -151,41 +136,60 @@ Modal Menu Sign Up
 						</a>
 					</button>
 				    <ul class="dropdown-menu">
-				      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center rounded nav-link ">Local&nbsp;vorks</a></li>
 				      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center rounded nav-link ">Global&nbsp;vorks</a></li>
 				      <li class="d-flex justify-content-center p-0 "><a href="add_vork.html" class="text-center rounded nav-link ">Add&nbsp;vork</a></li>
+				      <li class="d-flex justify-content-center p-0 "><a href="profile.html" class="text-center rounded nav-link ">Profile</a></li>
 				      <li class="d-flex justify-content-center p-0 "><a href="about_us.html" class="text-center rounded nav-link ">About&nbsp;us</a></li>
 				      <li class="d-flex justify-content-center p-0 "><a href="contacts.html" class="text-center rounded nav-link ">Contacts</a></li>
 				    </ul>
 				</div>
-			</div>
+			</span>
 		</div> 
 	</div>  
 	</header>
 	<main class="p-2 bg-motivation">
 		
 		<div class="container">
-			<form action="/add_vork" method="POST">
+			<form action="/add_vork" method="POST" class="">
+				<div class="image-container">
+                    <img src="../img/logo.png" id="imgProfile" style="width: 150px; height: 150px; background-color: var(--header-color);" class="img-thumbnail" />
+                   <!--  <div class="middle">
+                        <input type="button" class="btn btn-secondary" id="btnChangePicture" value="Change" />
+                        <input type="file" style="display: none;" id="vorkPicture" name="file" />
+                    </div> -->
+                </div>
 				<div class="form-group">
 					<label for="inputVorkName" class="">Vork name<span class="text-danger">*</span></label>
-					<input name="vork_name"  type="text" class="form-control" id="inputVorkName" aria-descridby="vorknameHelp" placeholder="New wheel" required="true">
+					<input maxlength="256" name="vork_name"  type="text" class="form-control" id="inputVorkName" aria-descridby="vorknameHelp" placeholder="New wheel" required="true">
 					<small id="vorknameHelp" class="form-text text-muted">Enter vork name</small>
 				</div>
-				<!-- <div class="form-group">
-					<label for="inputEmail" class="">Email address<span class="text-danger">*</span></label>
-					<input name="user_email" type="email" class="form-control" id="inputEmail" aria-descridby="emailHelp" placeholder="example@e.mail" required="true">
-					<small id="emailHelp" class="form-text text-muted">Enter your email</small>
+				<div class="form-group">
+					<label for="inputVorkDesc" class="">Description</label>
+					<textarea name="vork_desc" rows="8" maxlength="512" name="vork_desc" type="textarea" class="form-control inputVorkDesc" id="inputVorkDesc" aria-descridby="vorkDescHelp" placeholder="wheel&co" style="resize: none;">This is hard vork</textarea>
+					<small id="vorkDescHelp" class="form-text text-muted">Less than 512 characters</small>
 				</div>
 				<div class="form-group">
-					<label for="inputPassword" class="">Password<span class="text-danger">*</span></label>
-					<input name="user_password" type="password" class="form-control" id="inputPassword" placeholder="Password" required="true">
-					 
+					<label for="inputVorkCountry" class="">Country</label>
+					<input maxlength="256" name="country"  type="text" class="form-control" id="inputCountry" aria-descridby="countryHelp" placeholder="Ukraine">
+					<small id="countryHelp" class="form-text text-muted">Enter vork country</small>
 				</div>
 				<div class="form-group">
-					<label for="inputPassword" class="">Repeat password<span class="text-danger">*</span></label>
-					<input name="user_password_check" type="password" class="form-control" id="inputPassword" placeholder="Password" required="true">
-					<small id="passwordHelp" class="form-text text-muted">Password have to consider more ther 8 characters </small>
-				</div> -->
+					<label for="inputVorkRegion" class="">Region</label>
+					<input maxlength="256" name="region"  type="text" class="form-control" id="inputregion" aria-descridby="countryHelp" placeholder="Kyiv">
+					<small id="regionHelp" class="form-text text-muted">Enter vork region</small>
+				</div>
+				<div class="form-group">
+					<label for="inputVorkCity" class="">City</label>
+					<input maxlength="256" name="City"  type="text" class="form-control" id="inputCity" aria-descridby="CityHelp" placeholder="Kyiv">
+					<small id="CityHelp" class="form-text text-muted">Enter vork city</small>
+				</div>
+				<div class="form-group">
+					<label for="inputVorkNeeds" class="">Needs</label>
+					<input maxlength="256" name="vork_needs"  type="text" class="form-control" id="inputVorkNeeds" aria-descridby="vorkneedsHelp" placeholder="another wheel" required="true">
+					<small id="vorkneedsHelp" class="form-text text-muted">Enter vork needs</small>
+				</div>
+
+				
 				<div class="d-flex justify-content-center">
 					<button type="submit" class="btn btn-primary m-2">Submit</button>
 				</div>

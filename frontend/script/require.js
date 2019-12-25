@@ -1,62 +1,41 @@
-function getCookie(cname) {
-	setTimeout(function(){},500);
-	  var name = cname + "=";
-
+function correctNavBar() {
 	  var cookie = "";
 	  httpGetAsync("/cookie",(res)=>{
 	  	var cookie = JSON.parse(res);
-	  	// alert(cookie.token)
-	  	// alert(cookie.token!==`undefined`)
+	  	let addprofNav = `<li class="d-flex justify-content-center p-0 "><a href="add_vork.html" class="text-center text-white rounded nav-link ">Add&nbsp;vork</a></li>
+		      <li class="d-flex justify-content-center p-0 "><a href="profile.html" class="text-center text-white rounded nav-link ">Profile</a></li>`;
+		let addprofDropdown = `<li class="d-flex justify-content-center p-0 "><a href="add_vork.html" class="text-center rounded nav-link ">Add&nbsp;vork</a></li>
+		      <li class="d-flex justify-content-center p-0 "><a href="profile.html" class="text-center rounded nav-link ">Profile</a></li>`;
+	  	let logout = `	
+		<div class="d-none d-flex justify-content-center logout" id="logout">
+			<a href="/logout" class="btn btn-block text-light logout">Log&nbsp;out</a>
+		</div>
+		`;
+
+		let login = `
+		<div class="d-flex justify-content-center login">
+			<a href="#" class="btn btn-block text-light login" data-toggle="modal" data-target="#loginModal">Log&nbsp;in</a>
+		</div>
+		`;
+		let signup = `
+		<div class="d-flex justify-content-center signup">
+			<a href="#" class="btn btn-block bg-primary text-light signup" data-toggle="modal" data-target="#signupModal">Sign&nbsp;up</a>
+		</div>
+		`;
+		if((cookie.fail!='undefined'&&cookie.fail!="")){
+			alert(cookie.fail);
+		}
 	  	if(cookie.token!==`undefined`){
-	  		$('.logout').css({
-	  			"display": "yes"
-	  		});
-	  		$('.login').css({
-	  			"display": "none"
-	  		});
-	  		
-	  		$('.signup').css({
-	  			"display": "none"
-	  		});
+	  		$('.log-btn').append(logout);
+	  		$('.global-vorks-nav').after(addprofNav);
+	  		$('.global-vorks-dropdown').after(addprofDropdown);
 	  	}else{
-	  		$('.logout').css({
-	  			"display": "none"
-	  		});
-	  		$('.login').css({
-	  			"display": "yes"
-	  		});
-	  		
-	  		$('.signup').css({
-	  			"display": "yes"
-	  		});
-	  		
+	  		$('.log-btn').append(login);
+	  		$('.log-btn').append(signup);
 	  	}
 	  });
-	  
-	  // var ca = document.cookie.split(';');
-	  // for(var i = 0; i < ca.length; i++) {
-	  //   var c = ca[i];
-	  //   while (c.charAt(0) == ' ') {
-	  //     c = c.substring(1);
-	  //   }
-	  //   if (c.indexOf(name) == 0) {
-	  //     return c.substring(name.length, c.length);
-	  //   }
-	  // }
-	  // return "";
 }
-
-	// function checkCookie(name) {
-	//   var user = getCookie(name);
-	//   if (user != "") {
-	//     alert("Welcome again " + user);
-	//   } 
-	  
-	//   else {
-	//   	alert("No!");
-	//     user = prompt("Please enter your name:", "");
-	//   }
-	// } 
+ 
 function httpGetAsync(theUrl, callback){
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function() { 

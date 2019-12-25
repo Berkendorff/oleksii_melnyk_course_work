@@ -120,6 +120,9 @@ router.get('/css/variables.css', function (req, res) {
 router.get('/css/profile.css', function (req, res) {  
    res.sendFile( __dirname + "/" + css + "profile.css" );  
 });
+router.get('/css/add_vork.css', function (req, res) {  
+   res.sendFile( __dirname + "/" + css + "add_vork.css" );  
+});
 
 /*
 Send img
@@ -201,8 +204,8 @@ function authenticateUser(req,res){
       mysql.query('SELECT * FROM users WHERE user_email = ?',[email], function (error, results, fields){
       if (error) {
           req.session.auth = false;
-          res.send('Incorrect Email/Password!');
-          res.end();
+          req.session.fail='Some error';
+          res.redirect('/');
       }else{
         if(results.length > 0){
             decryptedString = cryptr.decrypt(results[0].user_password);
@@ -211,26 +214,25 @@ function authenticateUser(req,res){
                   req.session.token = cryptr.encrypt(results[0].user_email);
                }
                req.session.auth = true;
-               // res.redirect('/');
-               console.log(req.session);
+               req.session.fail="";
                res.redirect('/');
             }else{
                req.session.auth = false;
-               res.send("Email and password does not match");
-               res.end();
+               req.session.fail='Email and password does not match!';
+               res.redirect('/');
             }
         }
         else{
           req.session.auth = false;
-          res.send("Email does not exits");
-          res.end();
+          req.session.fail='Email does not exits!';
+          res.redirect('/');
         }
       }
     });
   }else{
       req.session.auth = false;
-    res.send('Incorrect Email/Password!');
-    res.end();
+      req.session.fail='Incorrect Email/Password!';
+      res.redirect('/')
   }
 }
 
@@ -242,17 +244,20 @@ function authorisationUser(req,res){
             console.log(err);
             // res.end("false");
             req.session.auth = false;
+            req.session.fail = "";
             return false;
          }
          if (rows.length > 0){
             console.log("authorsation complete");
             // res.end("true");
             req.session.auth = false;
+            req.session.fail = "";
             return true;
          }
          console.log("This email token invalid");
          // res.end("false");
          req.session.auth = false;
+         req.session.fail = "";
          return false;
       });
       
@@ -261,6 +266,7 @@ function authorisationUser(req,res){
       console.log("token is empty");
       // res.end("false");
       req.session.auth = false;
+      req.session.fail = "";
       return false;
    }
 }
@@ -285,36 +291,30 @@ function register (req,res){
   if (!emailExists(req.body.user_email)){
     var encryptedString = cryptr.encrypt(req.body.user_password);
     var users={
-        "user_name":req.body.user_name,
-        "user_email":req.body.user_email,
-        "user_registration_date":today,
-        "user_password":encryptedString
+        'user_email':req.body.user_email,
+        'user_name':req.body.user_name,
+        'user_password':encryptedString
     }
-    mysql.query('INSERT INTO users SET ?',users, function (error, results, fields) {
+    // mysql.query(`call signupUser("${req.body.user_email}","${req.body.user_name}","${encryptedString}");`, function (error, results, fields) {
+      mysql.query('insert into users set ?',users,function(error,results,fileds){
       if (error) {
         console.log(error);
-        res.json({
-            status:false,
-            message:'there are some error with query'
-        })
+        req.session.fail = "Some error";
+        res.redirect('/');
       }else{
-          res.json({
-            status:true,
-            data:results,
-            message:'user registered sucessfully'
-        })
+        //All ok! registered confirmed
+        req.session.fail = "";
+        res.redirect('/');
       }
     });
   }else{
-    res.json({
-      status:false,
-      message:'this email already exist'
-    })
+    req.session.fail = "Email already registered!";
+    res.redirect('/');
   } 
 }
 
 function sendCookie(req,res){
-  res.end(`{"token":"${req.session.token}"}`);
+  res.end(`{"token":"${req.session.token}","fail":"${req.session.fail}"}`);
 }
 
 function destroySession(req,res){

@@ -2,13 +2,14 @@
 
 function getVorks(){
 	httpGetAsync('/getVorksQuery',function(res,err){
+		
 		if (err) {
 			alert("Error!");
 			console.log(err);
 			console.log(res);
 			return 0;
 		}
-		// console.log(res);
+		console.log(res);
 		let vorks = JSON.parse(res);
 		// console.log();
 		for (let vork in vorks){
