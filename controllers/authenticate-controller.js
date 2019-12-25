@@ -29,8 +29,7 @@ module.exports.authenticate=function(req,res){
         if(results.length > 0){
             decryptedString = cryptr.decrypt(results[0].user_password);
             if(password==decryptedString){
-              // req.session.loggedin = true;
-              // req.session.email = email;
+              
               res.redirect('/');
             }else{
                 res.send("Email and password does not match");

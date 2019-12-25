@@ -4,15 +4,18 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Vorks</title>
+
 	<link rel="stylesheet" href="../css/variables.css">
 	<link rel="stylesheet" href="../css/required.css">
 	<link rel="stylesheet" href="../css/header.css">
-	<link rel="stylesheet" href="../css/main.css">
+	<!-- <link rel="stylesheet" href="../css/main.css"> -->
 	<link rel="stylesheet" href="../css/footer.css">
-	<link rel="icon" href="../img/logo.png" type="img">
+
+	<link rel="icon" type="img" href="../img/logo.png">
 
 	<link rel="text/script" href="../script/script.js">
-				
+	
+
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">		
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">		
@@ -21,8 +24,9 @@
 	<link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/universal/2-0-1/vendor/font-awesome/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans|Raleway&amp;display=swap" rel="stylesheet">
 </head>
-<body>
+<body  onload="getCookie();">
 
+<!-- onload="checkCookie("token");" -->
 <!-- 
 Modal Menu Log in
  -->
@@ -96,22 +100,6 @@ Modal Menu Sign Up
 								<input name="user_password_check" type="password" class="form-control" id="inputPassword" placeholder="Password" required="true">
 								<small id="passwordHelp" class="form-text text-muted">Password have to consider more ther 8 characters </small>
 							</div>
-							<div class="form-check">
-								<div class="dropdown col-md-4">
-								    <button class="btn btn-block dropdown" type="button" data-toggle="dropdown">
-								    	<a href="#" class="d-flex justify-content-center">
-											<img src="../img/dropdown.png" alt="dropdown-img" class="dropdown-img">
-										</a>
-								    	<!-- <span class="caret"></span> -->
-									</button>
-								    <ul class="dropdown-menu">
-								      <li class="d-flex justify-content-center m-1 p-0"><a href="#" class="text-center">Local&nbsp;vorks</a></li>
-								      <li class="d-flex justify-content-center m-1 p-0"><a href="#" class="text-center">Global&nbsp;vorks</a></li>
-								      <li class="d-flex justify-content-center m-1 p-0"><a href="#" class="text-center">Add&nbsp;vork</a></li>
-								      <li class="d-flex justify-content-center m-1 p-0"><a href="#" class="text-center">About&nbsp;us</a></li>
-								      <li class="d-flex justify-content-center m-1 p-0"><a href="#" class="text-center">Contacts</a></li>
-								    </ul>
-								</div>
 							</div>
 							<div class="d-flex justify-content-center">
 								<button type="submit" class="btn btn-primary m-2">Submit</button>
@@ -133,12 +121,12 @@ Modal Menu Sign Up
 					</a>
 					<div class="auth d-flex flex-wrap justify-content-center ">
 						<div class="d-none d-flex justify-content-center m-2 logout" id="logout">
-							<a href="#" class="btn btn-block text-light logout">Log&nbsp;out</a>
+							<a href="/logout" class="btn btn-block text-light logout">Log&nbsp;out</a>
 						</div>
-						<div class="d-flex justify-content-center m-2">
+						<div class="d-flex justify-content-center m-2 login">
 							<a href="#" class="btn btn-block text-light login" data-toggle="modal" data-target="#loginModal">Log&nbsp;in</a>
 						</div>
-						<div class="d-flex justify-content-center m-2">
+						<div class="d-flex justify-content-center m-2 signup">
 							<a href="#" class="btn btn-block bg-primary text-light signup" data-toggle="modal" data-target="#signupModal">Sign&nbsp;up</a>
 						</div>
 					</div>
@@ -163,11 +151,11 @@ Modal Menu Sign Up
 						</a>
 					</button>
 				    <ul class="dropdown-menu">
-				      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center  rounded nav-link ">Local&nbsp;vorks</a></li>
-		      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center  rounded nav-link ">Global&nbsp;vorks</a></li>
-		      <li class="d-flex justify-content-center p-0 "><a href="add_vork.html" class="text-center  rounded nav-link ">Add&nbsp;vork</a></li>
-		      <li class="d-flex justify-content-center p-0 "><a href="about_us.html" class="text-center  rounded nav-link ">About&nbsp;us</a></li>
-		      <li class="d-flex justify-content-center p-0 "><a href="contacts.html" class="text-center  rounded nav-link ">Contacts</a></li>
+				      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center rounded nav-link ">Local&nbsp;vorks</a></li>
+				      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center rounded nav-link ">Global&nbsp;vorks</a></li>
+				      <li class="d-flex justify-content-center p-0 "><a href="add_vork.html" class="text-center rounded nav-link ">Add&nbsp;vork</a></li>
+				      <li class="d-flex justify-content-center p-0 "><a href="about_us.html" class="text-center rounded nav-link ">About&nbsp;us</a></li>
+				      <li class="d-flex justify-content-center p-0 "><a href="contacts.html" class="text-center rounded nav-link ">Contacts</a></li>
 				    </ul>
 				</div>
 			</div>
@@ -215,13 +203,11 @@ Modal Menu Sign Up
 				<a href="" class="">Berkendorff</a>
 			</label>
 		</div>
-
 	</footer>
+	<script type="text/javascript" src="../script/require.js"></script>
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-	<script src="/../script/auth.js"></script>
 </body>
 </html>

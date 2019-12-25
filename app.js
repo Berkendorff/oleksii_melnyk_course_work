@@ -10,8 +10,6 @@ const bodyParser = require('body-parser');
 const mysql = require('./sql');
 const authenticateController=require('./controllers/authenticate-controller');
 const registerController=require('./controllers/register-controller');
-const token = require('./controllers/token');
-
 
 const Cryptr = require('cryptr');
 cryptr = new Cryptr('MyVrySecr');
@@ -29,16 +27,6 @@ const BadGateWay = html + 'test.html';
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
-/* route to handle login and registration */
-router.post('/api/register',registerController.register);
-// router.post('/api/authenticate',authenticateController.authenticate);
-router.post('/api/authenticate',authenticateUser);
- 
-console.log(authenticateController);
-router.post('/controllers/register-controller', registerController.register);
-// router.post('/controllers/authenticate-controller', authenticateController.authenticate);
-router.post('/controllers/authenticate-controller', authenticateUser);
-
 app.use(cookieParser());
 app.use(session({
   secret: 'SecretKeyForSecretUser',
@@ -46,6 +34,18 @@ app.use(session({
   saveUninitialized: true,
   cookie: {maxAge: 8694000000}
 }));
+
+/* route to handle login and registration */
+router.post('/api/register',register);
+// router.post('/api/authenticate',authenticateController.authenticate);
+router.post('/api/authenticate',authenticateUser);
+ 
+console.log(authenticateController);
+router.post('/controllers/register-controller', register);
+// router.post('/controllers/authenticate-controller', authenticateController.authenticate);
+router.post('/controllers/authenticate-controller', authenticateUser);
+
+
 
 /*
 Send html
@@ -63,7 +63,8 @@ Send html
 //    }
 // });
 
-router.get('/auth',authorisationUser);
+router.get('/cookie',sendCookie);
+router.get('/logout',destroySession);
 router.get('/', function (req, res) {  
    res.sendFile( __dirname + "/" + Index );  
 });
@@ -162,6 +163,10 @@ Send js
 router.get('/script/findVorks.js', function (req, res) {  
    res.sendFile( __dirname + "/" + js + "findVorks.js" );  
 });
+router.get('/script/require.js', function (req, res) {  
+   res.sendFile( __dirname + "/" + js + "require.js" );
+});
+
 
 router.get('/getVorksQuery',function (req, res) {  
    mysql.query('select * from vorks;', 
@@ -195,6 +200,7 @@ function authenticateUser(req,res){
     if(email && password){
       mysql.query('SELECT * FROM users WHERE user_email = ?',[email], function (error, results, fields){
       if (error) {
+          req.session.auth = false;
           res.send('Incorrect Email/Password!');
           res.end();
       }else{
@@ -204,21 +210,25 @@ function authenticateUser(req,res){
                if(!req.session.token) {
                   req.session.token = cryptr.encrypt(results[0].user_email);
                }
+               req.session.auth = true;
                // res.redirect('/');
                console.log(req.session);
                res.redirect('/');
             }else{
-                res.send("Email and password does not match");
-                res.end();
+               req.session.auth = false;
+               res.send("Email and password does not match");
+               res.end();
             }
         }
         else{
+          req.session.auth = false;
           res.send("Email does not exits");
           res.end();
         }
       }
     });
   }else{
+      req.session.auth = false;
     res.send('Incorrect Email/Password!');
     res.end();
   }
@@ -227,7 +237,7 @@ function authenticateUser(req,res){
 function authorisationUser(req,res){
    let token = req.session.token;
    if(token){
-      mysql.query(`select count(user_email) from users where user_email="${cryptr.decrypt(token)}"`,function(err,rows, fields){
+      mysql.query(`select user_email from users where user_email="${cryptr.decrypt(token)}"`,function(err,rows, fields){
          if(err){
             console.log(err);
             // res.end("false");
@@ -253,7 +263,63 @@ function authorisationUser(req,res){
       req.session.auth = false;
       return false;
    }
-   // res.redirect(req.url);
+}
+
+var existEmail = false;
+function emailExists(email){
+    mysql.query(`select count(user_email) as count from users where user_email="${email}";`,function(err,rows,fields){
+      if(rows[0].count=='1'){
+        existEmail = true;
+        return existEmail;
+      }
+      existEmail = false;
+      return existEmail;
+    });
+    return existEmail;
+  }
+
+function register (req,res){
+  var today = new Date();
+  console.log(emailExists(req.body.user_email));
+
+  if (!emailExists(req.body.user_email)){
+    var encryptedString = cryptr.encrypt(req.body.user_password);
+    var users={
+        "user_name":req.body.user_name,
+        "user_email":req.body.user_email,
+        "user_registration_date":today,
+        "user_password":encryptedString
+    }
+    mysql.query('INSERT INTO users SET ?',users, function (error, results, fields) {
+      if (error) {
+        console.log(error);
+        res.json({
+            status:false,
+            message:'there are some error with query'
+        })
+      }else{
+          res.json({
+            status:true,
+            data:results,
+            message:'user registered sucessfully'
+        })
+      }
+    });
+  }else{
+    res.json({
+      status:false,
+      message:'this email already exist'
+    })
+  } 
+}
+
+function sendCookie(req,res){
+  res.end(`{"token":"${req.session.token}"}`);
+}
+
+function destroySession(req,res){
+  req.session.destroy();
+  res.redirect('/');
 }
 
 // function authorisationUser(req,res){
