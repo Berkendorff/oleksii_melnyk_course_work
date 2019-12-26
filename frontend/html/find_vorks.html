@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="../css/variables.css">
 	<link rel="stylesheet" href="../css/required.css">
 	<link rel="stylesheet" href="../css/header.css">
-	<link rel="stylesheet" href="../css/find_vorks.css">
+	<link rel="stylesheet" href="../css/main.css">
 	<link rel="stylesheet" href="../css/footer.css">
 
 	<link rel="icon" type="img" href="../img/logo.png">
@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">		
     <link href="https://fonts.googleapis.com/css?family=PT+Sans|Raleway&amp;display=swap" rel="stylesheet">
 </head>
-<body  onload="correctNavBar(); getVorks();">
+<body  onload="correctNavBar();">
 <!-- 
 Modal Menu Log in
  -->
@@ -45,7 +45,7 @@ Modal Menu Log in
 								<label for="inputPassword" class="">
 								Password
 								</label>
-								<input maxlength="256" name="password" type="password" class="form-control" id="inputPassword" placeholder="p@ssw0rd"  required="true">
+								<input maxlength="32" name="password" type="password" class="form-control" id="inputPassword" placeholder="p@ssw0rd"  required="true">
 							</div>
 							<div class="d-flex justify-content-center">
 								<button type="submit" class="btn btn-primary m-2">Submit</button>
@@ -119,10 +119,9 @@ Modal Menu Sign Up
 			
 			</div>
 		<div class="container d-flex justify-content-center">
-			<ul class=" nav-list d-none d-md-flex justify-content-between m-0">
-		      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center text-white rounded nav-link ">Global&nbsp;vorks</a></li>
-		      <li class="d-flex justify-content-center p-0 "><a href="add_vork.html" class="text-center text-white rounded nav-link ">Add&nbsp;vork</a></li>
-		      <li class="d-flex justify-content-center p-0 "><a href="profile.html" class="text-center text-white rounded nav-link ">Profile</a></li>
+			<ul class=" nav-list d-none d-md-flex d-xl-flex justify-content-between m-0">
+			  <li class="d-flex justify-content-center p-0 "><a href="/" class="text-center text-white rounded nav-link ">Home</a></li>
+		      <li class="d-flex justify-content-center p-0 global-vorks-nav"><a href="find_vorks.html" class="text-center text-white rounded nav-link ">Global&nbsp;vorks</a></li>
 		      <li class="d-flex justify-content-center p-0 "><a href="about_us.html" class="text-center text-white rounded nav-link ">About&nbsp;us</a></li>
 		      <li class="d-flex justify-content-center p-0 "><a href="contacts.html" class="text-center text-white rounded nav-link ">Contacts</a></li>
 			</ul>
@@ -136,11 +135,10 @@ Modal Menu Sign Up
 						</a>
 					</button>
 				    <ul class="dropdown-menu">
-				      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center rounded nav-link ">Global&nbsp;vorks</a></li>
-				      <li class="d-flex justify-content-center p-0 "><a href="add_vork.html" class="text-center rounded nav-link ">Add&nbsp;vork</a></li>
-				      <li class="d-flex justify-content-center p-0 "><a href="profile.html" class="text-center rounded nav-link ">Profile</a></li>
-				      <li class="d-flex justify-content-center p-0 "><a href="about_us.html" class="text-center rounded nav-link ">About&nbsp;us</a></li>
-				      <li class="d-flex justify-content-center p-0 "><a href="contacts.html" class="text-center rounded nav-link ">Contacts</a></li>
+				    	<li class="d-flex justify-content-center p-0 "><a href="/" class="text-center rounded nav-link ">Home</a></li>	
+				      	<li class="d-flex justify-content-center p-0 global-vorks-dropdown"><a href="find_vorks.html" class="text-center rounded nav-link ">Global&nbsp;vorks</a></li>
+				      	<li class="d-flex justify-content-center p-0 "><a href="about_us.html" class="text-center rounded nav-link ">About&nbsp;us</a></li>
+				      	<li class="d-flex justify-content-center p-0 "><a href="contacts.html" class="text-center rounded nav-link ">Contacts</a></li>
 				    </ul>
 				</div>
 			</span>

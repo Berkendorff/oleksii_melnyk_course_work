@@ -2,7 +2,7 @@ main{
 	background-color: var(--motivation-color )
 }
 .vork{
-	border: solid 1px;
+	/*border: solid 1px;*/
 	/*background-image: url("../img/logo.png");*/
 	/*background-color: var(--header-color );*/
 	width: 100%;
@@ -12,9 +12,10 @@ main{
 }
 
 .vork-img{
-	width: 800px;
-	max-width: 1200px;
+	width: 100%;
+	max-width: 600px;
 	/*border:1px none solid none none ;*/
+	height: 100%;
 	max-height: 600px;
 	/*max-width: 400px;*/
 	/*height: 200px;*/

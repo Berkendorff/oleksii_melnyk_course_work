@@ -166,13 +166,21 @@ Send js
 router.get('/script/findVorks.js', function (req, res) {  
    res.sendFile( __dirname + "/" + js + "findVorks.js" );  
 });
+router.get('/script/add_vork.js', function (req, res) {  
+   res.sendFile( __dirname + "/" + js + "add_vork.js" );  
+});
 router.get('/script/require.js', function (req, res) {  
    res.sendFile( __dirname + "/" + js + "require.js" );
 });
+router.get('/script/profile.js', function (req, res) {  
+   res.sendFile( __dirname + "/" + js + "profile.js" );
+});
 
-
-router.get('/getVorksQuery',function (req, res) {  
-   mysql.query('select * from vorks;', 
+/*
+Req with sql
+*/
+router.get('/getInterestsQuery',function(req,res){
+  mysql.query('select * from interests;', 
       function(err,rows, fields){
             if (err) {
                res.writeHead(404,{'Content-type':'text/html'});
@@ -183,6 +191,87 @@ router.get('/getVorksQuery',function (req, res) {
             res.end(JSON.stringify(rows));            
          });
 });
+
+router.get('/getVorksQuery',function (req, res) {  
+   mysql.query('select * from vorks join users where (vork_creator_id = user_id);', 
+      function(err,rows, fields){
+            if (err) {
+               res.writeHead(404,{'Content-type':'text/html'});
+               res.end('/');
+               throw err;
+            }
+            // console.log(rows);
+            res.writeHead(200,{'Content-type':'text/plain'});
+            res.end(JSON.stringify(rows));            
+         });
+});
+
+router.get('/loadProfile',function(req,res){
+if (req.session.auth){
+     let user_id = '';
+     let token = req.session.token;
+     var decode = cryptr.decrypt(token);
+     mysql.query(`select * from users where user_email = "${decode}"`,function(err,rows){
+        if(err){
+          res.writeHead(404,{'Content-type':'text/html'});
+               res.end("Error");
+          console.log(err);
+        }
+            // console.log(rows);
+            res.writeHead(200,{'Content-type':'text/plain'});
+            res.end(JSON.stringify(rows[0]));
+          });
+
+  }
+  
+});
+ 
+router.post('/add_vork',function(req,res){
+  if (req.session.auth){
+     let user_id = '';
+     let token = req.session.token;
+     var decode = cryptr.decrypt(token);
+     mysql.query(`select user_id from users where user_email="${decode}";`,function(err,rows){
+        console.log(rows);
+        if(err){
+          user_id =  -1;
+        }
+        if(rows.length>0){
+          user_id = rows[0].user_id;
+          addVork(req,user_id);
+        }else{
+          user_id = -1;
+
+        }
+      });
+   
+  }else{
+    req.session.fail='Please, login or sing in for add!';  
+  }
+  res.redirect('/add_vork.html');
+});
+
+function addVork(req,user_id){
+  let body = req.body;
+  console.log(body);
+  let location = {
+    "country" :body.country,
+    "region"  :body.region,
+    "city"    :body.city
+  }
+  // console.log(location);
+  // console.log(JSON.stringify(location));
+  mysql.query(`call app_add_vork(
+    '${user_id}',
+    '${body.vork_name}',
+    '${body.vork_desc}',
+    '${body.vork_needs}',
+    'open',
+    '${JSON.stringify(location)}'
+    );`,function(err){
+      console.log(err);
+    });
+}
 
 router.get('*', function (req, res) {  
    res.sendFile( __dirname + "/" +  html + "404.html");  
@@ -250,7 +339,7 @@ function authorisationUser(req,res){
          if (rows.length > 0){
             console.log("authorsation complete");
             // res.end("true");
-            req.session.auth = false;
+            req.session.auth = true;
             req.session.fail = "";
             return true;
          }

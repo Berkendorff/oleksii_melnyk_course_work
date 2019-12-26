@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="../css/variables.css">
 	<link rel="stylesheet" href="../css/required.css">
 	<link rel="stylesheet" href="../css/header.css">
-	<link rel="stylesheet" href="../css/add_vork.css">
+	<link rel="stylesheet" href="../css/main.css">
 	<link rel="stylesheet" href="../css/footer.css">
 
 	<link rel="icon" type="img" href="../img/logo.png">
@@ -45,7 +45,7 @@ Modal Menu Log in
 								<label for="inputPassword" class="">
 								Password
 								</label>
-								<input maxlength="256" name="password" type="password" class="form-control" id="inputPassword" placeholder="p@ssw0rd"  required="true">
+								<input maxlength="32" name="password" type="password" class="form-control" id="inputPassword" placeholder="p@ssw0rd"  required="true">
 							</div>
 							<div class="d-flex justify-content-center">
 								<button type="submit" class="btn btn-primary m-2">Submit</button>
@@ -119,10 +119,9 @@ Modal Menu Sign Up
 			
 			</div>
 		<div class="container d-flex justify-content-center">
-			<ul class=" nav-list d-none d-md-flex justify-content-between m-0">
-		      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center text-white rounded nav-link ">Global&nbsp;vorks</a></li>
-		      <li class="d-flex justify-content-center p-0 "><a href="add_vork.html" class="text-center text-white rounded nav-link ">Add&nbsp;vork</a></li>
-		      <li class="d-flex justify-content-center p-0 "><a href="profile.html" class="text-center text-white rounded nav-link ">Profile</a></li>
+			<ul class=" nav-list d-none d-md-flex d-xl-flex justify-content-between m-0">
+			  <li class="d-flex justify-content-center p-0 "><a href="/" class="text-center text-white rounded nav-link ">Home</a></li>
+		      <li class="d-flex justify-content-center p-0 global-vorks-nav"><a href="find_vorks.html" class="text-center text-white rounded nav-link ">Global&nbsp;vorks</a></li>
 		      <li class="d-flex justify-content-center p-0 "><a href="about_us.html" class="text-center text-white rounded nav-link ">About&nbsp;us</a></li>
 		      <li class="d-flex justify-content-center p-0 "><a href="contacts.html" class="text-center text-white rounded nav-link ">Contacts</a></li>
 			</ul>
@@ -136,11 +135,10 @@ Modal Menu Sign Up
 						</a>
 					</button>
 				    <ul class="dropdown-menu">
-				      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center rounded nav-link ">Global&nbsp;vorks</a></li>
-				      <li class="d-flex justify-content-center p-0 "><a href="add_vork.html" class="text-center rounded nav-link ">Add&nbsp;vork</a></li>
-				      <li class="d-flex justify-content-center p-0 "><a href="profile.html" class="text-center rounded nav-link ">Profile</a></li>
-				      <li class="d-flex justify-content-center p-0 "><a href="about_us.html" class="text-center rounded nav-link ">About&nbsp;us</a></li>
-				      <li class="d-flex justify-content-center p-0 "><a href="contacts.html" class="text-center rounded nav-link ">Contacts</a></li>
+				    	<li class="d-flex justify-content-center p-0 "><a href="/" class="text-center rounded nav-link ">Home</a></li>	
+				      	<li class="d-flex justify-content-center p-0 global-vorks-dropdown"><a href="find_vorks.html" class="text-center rounded nav-link ">Global&nbsp;vorks</a></li>
+				      	<li class="d-flex justify-content-center p-0 "><a href="about_us.html" class="text-center rounded nav-link ">About&nbsp;us</a></li>
+				      	<li class="d-flex justify-content-center p-0 "><a href="contacts.html" class="text-center rounded nav-link ">Contacts</a></li>
 				    </ul>
 				</div>
 			</span>
@@ -165,7 +163,7 @@ Modal Menu Sign Up
 				</div>
 				<div class="form-group">
 					<label for="inputVorkDesc" class="">Description</label>
-					<textarea name="vork_desc" rows="8" maxlength="512" name="vork_desc" type="textarea" class="form-control inputVorkDesc" id="inputVorkDesc" aria-descridby="vorkDescHelp" placeholder="wheel&co" style="resize: none;">This is hard vork</textarea>
+					<textarea name="vork_desc" rows="8" maxlength="512" name="vork_desc" type="textarea" class="form-control inputVorkDesc" id="inputVorkDesc" aria-descridby="vorkDescHelp" placeholder="wheel&co" style="resize: none;" placeholder="This is hard vork"></textarea>
 					<small id="vorkDescHelp" class="form-text text-muted">Less than 512 characters</small>
 				</div>
 				<div class="form-group">
@@ -180,16 +178,17 @@ Modal Menu Sign Up
 				</div>
 				<div class="form-group">
 					<label for="inputVorkCity" class="">City</label>
-					<input maxlength="256" name="City"  type="text" class="form-control" id="inputCity" aria-descridby="CityHelp" placeholder="Kyiv">
+					<input maxlength="256" name="city"  type="text" class="form-control" id="inputCity" aria-descridby="CityHelp" placeholder="Kyiv">
 					<small id="CityHelp" class="form-text text-muted">Enter vork city</small>
 				</div>
 				<div class="form-group">
 					<label for="inputVorkNeeds" class="">Needs</label>
-					<input maxlength="256" name="vork_needs"  type="text" class="form-control" id="inputVorkNeeds" aria-descridby="vorkneedsHelp" placeholder="another wheel" required="true">
+					<input maxlength="256" name="vork_needs"  type="text" class="form-control" id="inputVorkNeeds" aria-descridby="vorkneedsHelp" placeholder="another wheel">
 					<small id="vorkneedsHelp" class="form-text text-muted">Enter vork needs</small>
 				</div>
+				<div class="form-group form-check interests-checkbox d-flex justify-content-between flex-wrap" onload="getInterests()">
 
-				
+				</div>
 				<div class="d-flex justify-content-center">
 					<button type="submit" class="btn btn-primary m-2">Submit</button>
 				</div>
@@ -199,7 +198,7 @@ Modal Menu Sign Up
 
 
 
-	</main>
+	</main>	
 
 	<footer class="p-2 m-0">
 		<div class="d-flex justify-content-center text-white ">
@@ -209,6 +208,7 @@ Modal Menu Sign Up
 		</div>
 	</footer>
 	<script type="text/javascript" src="../script/require.js"></script>
+	<script type="text/javascript" src="../script/add_vork.js"></script>
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

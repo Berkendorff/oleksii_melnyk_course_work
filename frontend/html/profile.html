@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="../css/variables.css">
 	<link rel="stylesheet" href="../css/required.css">
 	<link rel="stylesheet" href="../css/header.css">
-	<link rel="stylesheet" href="../css/profile.css">
+	<link rel="stylesheet" href="../css/main.css">
 	<link rel="stylesheet" href="../css/footer.css">
 
 	<link rel="icon" type="img" href="../img/logo.png">
@@ -45,7 +45,7 @@ Modal Menu Log in
 								<label for="inputPassword" class="">
 								Password
 								</label>
-								<input maxlength="256" name="password" type="password" class="form-control" id="inputPassword" placeholder="p@ssw0rd"  required="true">
+								<input maxlength="32" name="password" type="password" class="form-control" id="inputPassword" placeholder="p@ssw0rd"  required="true">
 							</div>
 							<div class="d-flex justify-content-center">
 								<button type="submit" class="btn btn-primary m-2">Submit</button>
@@ -119,10 +119,9 @@ Modal Menu Sign Up
 			
 			</div>
 		<div class="container d-flex justify-content-center">
-			<ul class=" nav-list d-none d-md-flex justify-content-between m-0">
-		      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center text-white rounded nav-link ">Global&nbsp;vorks</a></li>
-		      <li class="d-flex justify-content-center p-0 "><a href="add_vork.html" class="text-center text-white rounded nav-link ">Add&nbsp;vork</a></li>
-		      <li class="d-flex justify-content-center p-0 "><a href="profile.html" class="text-center text-white rounded nav-link ">Profile</a></li>
+			<ul class=" nav-list d-none d-md-flex d-xl-flex justify-content-between m-0">
+			  <li class="d-flex justify-content-center p-0 "><a href="/" class="text-center text-white rounded nav-link ">Home</a></li>
+		      <li class="d-flex justify-content-center p-0 global-vorks-nav"><a href="find_vorks.html" class="text-center text-white rounded nav-link ">Global&nbsp;vorks</a></li>
 		      <li class="d-flex justify-content-center p-0 "><a href="about_us.html" class="text-center text-white rounded nav-link ">About&nbsp;us</a></li>
 		      <li class="d-flex justify-content-center p-0 "><a href="contacts.html" class="text-center text-white rounded nav-link ">Contacts</a></li>
 			</ul>
@@ -136,39 +135,18 @@ Modal Menu Sign Up
 						</a>
 					</button>
 				    <ul class="dropdown-menu">
-				      <li class="d-flex justify-content-center p-0 "><a href="find_vorks.html" class="text-center rounded nav-link ">Global&nbsp;vorks</a></li>
-				      <li class="d-flex justify-content-center p-0 "><a href="add_vork.html" class="text-center rounded nav-link ">Add&nbsp;vork</a></li>
-				      <li class="d-flex justify-content-center p-0 "><a href="profile.html" class="text-center rounded nav-link ">Profile</a></li>
-				      <li class="d-flex justify-content-center p-0 "><a href="about_us.html" class="text-center rounded nav-link ">About&nbsp;us</a></li>
-				      <li class="d-flex justify-content-center p-0 "><a href="contacts.html" class="text-center rounded nav-link ">Contacts</a></li>
+				    	<li class="d-flex justify-content-center p-0 "><a href="/" class="text-center rounded nav-link ">Home</a></li>	
+				      	<li class="d-flex justify-content-center p-0 global-vorks-dropdown"><a href="find_vorks.html" class="text-center rounded nav-link ">Global&nbsp;vorks</a></li>
+				      	<li class="d-flex justify-content-center p-0 "><a href="about_us.html" class="text-center rounded nav-link ">About&nbsp;us</a></li>
+				      	<li class="d-flex justify-content-center p-0 "><a href="contacts.html" class="text-center rounded nav-link ">Contacts</a></li>
 				    </ul>
 				</div>
 			</span>
 		</div> 
 	</div>  
 	</header>
-	<main class="bg-motivation">
-		<!-- <div class="d-flex">
-			<div class="user-img">
-
-			</div>
-			<div class="user-info">
-				<div class="user_name d-flex">
-					<label for="user_name" class="m-3">Username</label>
-					<p class="m-3" id="user_name">123</p>
-				</div>
-				<div class="user_email d-flex">
-					<label for="user_email" class="m-3">Email</label>
-					<p class="m-3" id="user_email">@</p>
-				</div>
-				<div class="user_location d-flex">
-					<label for="user_location" class="m-3">Location</label>
-					<p class="m-3" id="user_location">@</p>
-				</div>
-			</div>
-		</div> -->
-
-		<div class="container bg-motivation pt-3 pb-3">
+	<main class="bg-motivation" onload="">
+		<!-- <div class="container bg-motivation pt-3 pb-3">
         <div class="row ">
             <div class="col-12 ">
                 <div class="card ">
@@ -277,7 +255,7 @@ Modal Menu Sign Up
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 	</main>
 
@@ -289,6 +267,7 @@ Modal Menu Sign Up
 		</div>
 	</footer>
 	<script type="text/javascript" src="../script/require.js"></script>
+	<script type="text/javascript" src="../script/profile.js"></script>
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

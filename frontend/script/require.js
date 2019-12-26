@@ -29,6 +29,7 @@ function correctNavBar() {
 	  		$('.log-btn').append(logout);
 	  		$('.global-vorks-nav').after(addprofNav);
 	  		$('.global-vorks-dropdown').after(addprofDropdown);
+	  		
 	  	}else{
 	  		$('.log-btn').append(login);
 	  		$('.log-btn').append(signup);
