@@ -193,7 +193,7 @@ router.get('/getInterestsQuery',function(req,res){
 });
 
 router.get('/getVorksQuery',function (req, res) {  
-   mysql.query('select * from vorks join users where (vork_creator_id = user_id);', 
+   mysql.query('select * from vorks join users where (vork_creator_id = user_id)  order by vork_date desc limit 32;', 
       function(err,rows, fields){
             if (err) {
                res.writeHead(404,{'Content-type':'text/html'});
@@ -228,22 +228,13 @@ if (req.session.auth){
  
 router.post('/add_vork',function(req,res){
   if (req.session.auth){
+    console.log(req.body);
      let user_id = '';
      let token = req.session.token;
+     let token_id = req.session.token_id;
      var decode = cryptr.decrypt(token);
-     mysql.query(`select user_id from users where user_email="${decode}";`,function(err,rows){
-        console.log(rows);
-        if(err){
-          user_id =  -1;
-        }
-        if(rows.length>0){
-          user_id = rows[0].user_id;
-          addVork(req,user_id);
-        }else{
-          user_id = -1;
-
-        }
-      });
+     var decode_id = cryptr.decrypt(token_id);
+     addVork(req,decode_id);
    
   }else{
     req.session.fail='Please, login or sing in for add!';  
@@ -251,26 +242,74 @@ router.post('/add_vork',function(req,res){
   res.redirect('/add_vork.html');
 });
 
+router.post('/subscribeUser',function(req,res){
+  console.log(req.body);
+    if(req.body!=''&&req.session.auth&&req.body.data.length<20){
+        mysql.query(`insert into users_vorks(user_id,vork_id) 
+          values("${cryptr.decrypt(req.session.token_id)}","${req.body.data}");`,function(err,rows){
+          if(err){
+            console.log(err);
+          }
+          console.log("SUBS!");
+        });
+    }else{
+      console.log("no(");
+      req.session.fail="Please login or be quite";
+      res.redirect('/');
+      return;
+    }
+    res.redirect('/find_vorks.html');
+});
+
 function addVork(req,user_id){
   let body = req.body;
   console.log(body);
-  let location = {
-    "country" :body.country,
-    "region"  :body.region,
-    "city"    :body.city
+  let location={};
+  if(body.country!='undefined' && body.country!=''){
+    location.country=body.country;
   }
+  if(body.region!='undefined' && body.region!=''){
+    location.region=body.region;
+  }
+  if(body.city!='undefined' && body.city!=''){
+    location.city=body.city;
+  }
+
   // console.log(location);
   // console.log(JSON.stringify(location));
   mysql.query(`call app_add_vork(
-    '${user_id}',
-    '${body.vork_name}',
-    '${body.vork_desc}',
-    '${body.vork_needs}',
-    'open',
-    '${JSON.stringify(location)}'
-    );`,function(err){
-      console.log(err);
+    "${user_id}",
+    "${body.vork_name}",
+    "${body.vork_desc}",
+    "${body.vork_needs}",
+    "open",
+    '${JSON.stringify(location)}');`,
+    function(err,res){
+      if(err){
+        console.log(err);
+        return;
+      }
+      mysql.query(`select vork_id from vorks where vork_creator_id="${user_id}" and vork_name ="${body.vork_name}";`,
+      function(err,rows){
+        console.log('open add interests;');
+        if(err){
+          console.log(err);
+          req.session.fail="Can`t add interests of vork";
+          return;
+        }
+          var keys = Object.keys(req.body);
+          console.log(keys);
+          for (let key in keys){
+              if(!keys[key].match(/[^0-9]/)){
+                console.log(keys[key]+" !!!");
+                mysql.query(`insert into vorks_interests(vork_id,interest_id) values("${rows[0].vork_id}","${keys[key]}");`)
+              }
+          }
+      });
+      
     });
+  
+  
 }
 
 router.get('*', function (req, res) {  
@@ -298,11 +337,13 @@ function authenticateUser(req,res){
       }else{
         if(results.length > 0){
             decryptedString = cryptr.decrypt(results[0].user_password);
+
             if(password==decryptedString){
                if(!req.session.token) {
                   req.session.token = cryptr.encrypt(results[0].user_email);
                }
                req.session.auth = true;
+               req.session.token_id = cryptr.encrypt(results[0].user_id);
                req.session.fail="";
                res.redirect('/');
             }else{

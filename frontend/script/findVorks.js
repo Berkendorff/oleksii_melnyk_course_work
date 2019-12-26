@@ -15,52 +15,99 @@ function getVorks(){
 		for (let vork in vorks){
 			let location = JSON.parse(vorks[vork].vork_location);
 			// console.log(location);
+			let country ='';
+			let region = '';
+			let city = '';
+			if(location.country!='undefined'&&location.country!=undefined&&location.coutry!=''){
+				country = location.country + ", ";
+			}
+			if(location.region!='undefined'&&location.region!=undefined&&location.region!=''){
+				region = location.region + ", ";
+			}
+			if(location.city!='undefined'&&location.city!=undefined&&location.city!=''){
+				city = location.city;
+			}
+			let locationhtml = ' ';
+			if(country==''&&region==''&&city==''){
+				locationhtml = '';
+			}
+			else{
+				locationhtml = `<p class="col-5 rounded m-2 text-white text-center">Location: 
+						${country} ${region} ${city}
+						</p>`;
+			}
+			let date = new Date(vorks[vork].vork_creation_date);
+			let formatted_date = date.getFullYear() + 
+			"-" + (date.getMonth() + 1) + 
+			"-" + date.getDate();
+
 			let htmlVork= 
 			`
-			<div class="vork rounded d-flex border-primary w-100 m-3"  >
-				<div class="">
+			<div class="vork d-flex flex-wrap flex-md-nowrap  flex-lg-nowrap justify-content-center  w-100 m-3 border-bottom"  >
+				<div class="d-flex justify-content-center">
 					<img src="https://loremflickr.com/320/240/mountain" alt="" class="vork-img rounded-left rounded	border-primary">
 				</div>
 				<div class="d-flex flex-wrap w-100">
-					<div class="col-12 d-flex flex-wrap align-items-center flex-wrap vork-info justify-content-between ">
-						<p class="col-5 rounded m-2 text-white ">Vork: ${vorks[vork].vork_name}</p>
-						<p class="col-5 rounded m-2 text-white ">Desc: ${vorks[vork].vork_desc}</p>
-						<p class="col-5 rounded m-2 text-white ">Vorker: ${vorks[vork].user_name}</p>
-						<p class="col-5 rounded m-2 text-white ">Needs: ${vorks[vork].vork_needs}</p>
-						<p class="col-5 rounded m-2 text-white ">Location: 
-						${location.coutry}, ${location.region}, ${location.city}
-						</p>
-						<p class="col-5 rounded m-2 text-white ">Status: ${vorks[vork].vork_status}</p>
+					<div class="col-12 d-flex flex-wrap align-items-center flex-wrap vork-info justify-content-center justify-content-md-between justify-content-lg-between">
+						<p class="col-5 rounded m-2 text-white font-weight-bold text-center">Vork: ${vorks[vork].vork_name}</p>
+						<p class="col-5 rounded m-2 text-white text-center">Created: ${formatted_date}</p>
+						<p class="col-5 rounded m-2 text-white text-center">Desc: ${vorks[vork].vork_desc}</p>
+						<p class="col-5 rounded m-2 text-white text-center">Needs: ${vorks[vork].vork_needs}</p>
+						<p class="col-5 rounded m-2 text-white text-center">Vorker: ${vorks[vork].user_name}</p>
+						<p class="col-5 rounded m-2 text-white text-center">Email: ${vorks[vork].user_email}</p>
+						
+						${locationhtml}
+						<p class="col-5 rounded m-2 text-white text-center">Status: ${vorks[vork].vork_status}</p>
+						<div class="col-12 d-flex justify-content-md-end justify-content-center">
+							<form method="post" action="/subscribeUser" onsubmit="">
+								<button class="btn btn-primary" type="submit">Subscribe</button>
+								<input class="d-none" type="text" name="data" value="${vorks[vork].vork_id}">  
+							</form> 
+						</div>
 					</div>
+
 				</div>
 			</div>
 			`;
-
-		
-			// `<div class="vork rounded m-3">\
-			// 	<div class="">\
-			// 	<div class="d-flex justify-content-center rounded-top bg-primary">\
-			// 		<img src="img/logo.png" alt="logo" class="vork-img">\
-			// 	</div>\
-			// 	<div class="d-flex text-center flex-wrap justify-content-center rounded-bottom bg-secondary">\
-			// 		<span class="container">${vorks[vork].vork_name}</span>\
-			// 		<span class="container">${vorks[vork].vork_desc}</span>\
-			// 		<span class="container">${vorks[vork].vork_needs}</span>\
-			// 	</div>\
-			// </div>`;
 			$('.canvas').append(htmlVork);
 		}
 	});
 }
 
+function subscribeUserToVork(data){
+	// console.log(data);
+	httpPostAsync('/subscribeUser',"data="+data,function(rows,error){
+		// console.log(data);
+		if(error){
+			alert("Error!");
+			return 0;
+		}
+		alert("Subscribed!");
+	});
+}
 
-// function httpGetAsync(theUrl, callback)
-// {
-//     var xmlHttp = new XMLHttpRequest();
-//     xmlHttp.onreadystatechange = function() { 
-//         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-//             callback(xmlHttp.responseText);
-//     }
-//     xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-//     xmlHttp.send(null);
-// }
+function httpGetAsync(theUrl, callback){
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.onreadystatechange = function() { 
+		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+		    callback(xmlHttp.responseText);
+	}
+	xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+	xmlHttp.send(null);
+}	
+
+function httpPostAsync(url,data,callback){
+	console.log(data);
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.onreadystatechange = function() { 
+		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+		    callback(xmlHttp.responseText);
+	}
+	xmlHttp.open('POST',url,true);
+	xmlHttp.setRequestHeader("Content-Type", 
+		"text/plain;charset=UTF-8");
+
+	xmlHttp.send(data);
+	console.log();
+
+}

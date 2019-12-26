@@ -1,5 +1,5 @@
 function correctNavBar() {
-	  var cookie = "";
+	  // var cookie = "";
 	  httpGetAsync("/cookie",(res)=>{
 	  	var cookie = JSON.parse(res);
 	  	let addprofNav = `<li class="d-flex justify-content-center p-0 "><a href="add_vork.html" class="text-center text-white rounded nav-link ">Add&nbsp;vork</a></li>

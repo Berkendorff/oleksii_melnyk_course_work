@@ -1,4 +1,5 @@
 function getInterests(){
+	console.log("open interests");
 	httpGetAsync('/getInterestsQuery', function(rows,error){
 		console.log(rows);
 		if (error) {
@@ -6,22 +7,14 @@ function getInterests(){
 			return 0;
 		}	
 		let interests = JSON.parse(rows);
+		console.log(interests);
 		for (let i in interests){;
-			let checkbox = `<div><label for="${interests[i].interest}" class="">${interests[i].interest}</label>
-					<input type="checkbox" name="${interests[i].interest}" id="${interests[i].interest}" class=""></div>`;
+			let checkbox = `<div class="">|<label for="${interests[i].interest}" class="">${interests[i].interest}</label>
+					<input type="checkbox" name="${interests[i].interest_id}" id="${interests[i].interest}" class="">|</div>`;
 			$('.interests-checkbox').append(checkbox);
 		}	
 
 	});
+	console.log("close interests");
 }
 
-// function httpGetAsync(theUrl, callback)
-// {
-//     var xmlHttp = new XMLHttpRequest();
-//     xmlHttp.onreadystatechange = function() { 
-//         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-//             callback(xmlHttp.responseText);
-//     }
-//     xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-//     xmlHttp.send(null);
-// }
