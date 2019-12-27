@@ -1,7 +1,8 @@
 
 const port = process.env.PORT || 8080;
 const host = '0.0.0.0';
-const ejs = require('ejs')
+const ejs = require('ejs');
+const url = require('url')
 const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -176,6 +177,9 @@ router.get('/script/profile.js', function (req, res) {
    res.sendFile( __dirname + "/" + js + "profile.js" );
 });
 
+router.get('/script/index.js', function (req, res) {  
+   res.sendFile( __dirname + "/" + js + "index.js" );
+});
 /*
 Req with sql
 */
@@ -193,18 +197,71 @@ router.get('/getInterestsQuery',function(req,res){
 });
 
 router.get('/getVorksQuery',function (req, res) {  
-   mysql.query('select * from vorks join users where (vork_creator_id = user_id)  order by vork_date desc limit 32;', 
+  // console.log(url.parse(req.url,true).query!);
+  let interest = url.parse(req.url,true).query.interest;
+  console.log("interest " + interest);
+  console.log(interest=='null');
+
+  if(interest!=''&&interest!='undefined'&&interest!='null'){
+ mysql.query(`select * from interests as i join vorks_interests as vi join vorks as v join users u          
+  where (i.interest = '${interest}' and vi.interest_id = i.interest_id and v.vork_id=vi.vork_id and u.user_id=v.vork_creator_id) 
+  order by vork_date desc limit 32;`, 
       function(err,rows, fields){
             if (err) {
+              console.log('error');
                res.writeHead(404,{'Content-type':'text/html'});
-               res.end('/');
+               res.redirect('/find_vorks.html');
                throw err;
+            }
+            res.writeHead(200,{'Content-type':'text/plain'});
+            res.end(JSON.stringify(rows));            
+         });
+  }
+  else{
+   mysql.query(`select * from vorks v join users u
+    where (v.vork_creator_id = u.user_id )  
+    order by vork_date desc limit 32;`, 
+      function(err,rows, fields){
+        // console.log(rows);
+            if (err) {
+              console.log(err);
+               res.writeHead(404,{'Content-type':'text/html'});
+               res.redirect('/find_vorks.html');
+               throw err;
+               return;
             }
             // console.log(rows);
             res.writeHead(200,{'Content-type':'text/plain'});
             res.end(JSON.stringify(rows));            
          });
+  }
 });
+
+// router.post('/getVorksQuery',function (req, res) {  
+//   console.log(req.body.interest);
+//   //  mysql.query(`select * from interests as i join vorks_interests as vi join vorks as v                ###########################3
+//   // where (i.interest = '${req.body.interest}' and vi.interest_id = i.interest_id and v.vork_id=vi.vork_id) 
+//   // order by vork_date desc limit 32;`, 
+//   //     function(err,rows, fields){
+//   //       console.log('in callback');
+//   //           if (err) {
+//   //             console.log('error');
+//   //              res.writeHead(404,{'Content-type':'text/html'});
+//   //              res.redirect('/find_vorks.html');
+//   //              throw err;
+//   //           }
+//   //           // console.log(rows);
+//   //           console.log('return values');
+//   //           console.log(rows);
+//   //           res.writeHead(200,{'Content-type':'text/plain'});
+//   //           // res.redirect('/find_vorks.html')
+//   //           res.end(JSON.stringify(rows));            
+//   //        });
+//   req.session.interest = req.body.interest;
+//   console.log(req.session);
+//   res.end('/find_vorks.html');
+
+// });
 
 router.get('/loadProfile',function(req,res){
 if (req.session.auth){
@@ -444,7 +501,8 @@ function register (req,res){
 }
 
 function sendCookie(req,res){
-  res.end(`{"token":"${req.session.token}","fail":"${req.session.fail}"}`);
+  res.end(`{"token":"${req.session.token}","fail":"${req.session.fail}","interest":"${req.session.interest}"}`);
+  // res.end(JSON.stringify(req.session));
 }
 
 function destroySession(req,res){
@@ -452,58 +510,15 @@ function destroySession(req,res){
   res.redirect('/');
 }
 
-// function authorisationUser(req,res){
-//    let token = req.session.token;
-//    console.log("auth entered");
-//    if(token){
-//       mysql.query(`select user_email from users where user_email="${cryptr.decrypt(token)}"`,function(err,rows, fields){
-//          if(err){
-//             console.log(err);
-//             // res.end("false");
-//             return false;
-//          }
-//          if (rows.length > 0){
-//             console.log("authorsation complete");
-//             // res.end("true");
-//             return true;
-//          }
-//          console.log("This email token invalid");
-//          // res.end("false");
-//          return false;
-//       });
-      
-//    }
-//    else{
-//       console.log("token is empty");
-//       // res.end("false");
-//       return false;
-//    }
-// }
-
-
-
-
-// function getVorks(){
-//    mysql.query('select * from vorks;', 
-//       function(err,rows, fields){
-//             if (err) {
-//                res.writeHead(404,{'Content-type':'text/html'});
-//                res.end(err);
-//                throw err;
-//             }
-//             res.writeHead(200,{'Content-type':'text/plain'});
-//             // log(rows);
-//             res.end(JSON.stringify(rows));            
-//          });
-// }
-
-// function httpGetAsync(theUrl, callback)
-// {
-//     var xmlHttp = new XMLHttpRequest();
-//     xmlHttp.onreadystatechange = function() { 
-//         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-//             callback(xmlHttp.responseText);
-//     }
-//     xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-//     xmlHttp.send(null);
-// }
+function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+    location.search
+        .substr(1)
+        .split("&")
+        .forEach(function (item) {
+          tmp = item.split("=");
+          if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+        });
+    return result;
+}
