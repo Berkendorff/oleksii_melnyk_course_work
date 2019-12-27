@@ -46,3 +46,17 @@ function httpGetAsync(theUrl, callback){
 	xmlHttp.open("GET", theUrl, true); // true for asynchronous 
 	xmlHttp.send(null);
 }	
+function redirectTo(url){
+	window.open(url,'_self');
+}
+function httpPostAsync(url,data,callback){
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.open('POST',url,true);
+	xmlHttp.setRequestHeader("Content-Type", 
+		"application/x-www-form-urlencoded");
+	xmlHttp.onreadystatechange = function() { 
+		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+		    callback(xmlHttp.responseText);
+	}
+	xmlHttp.send(`interest=${data}`);
+}

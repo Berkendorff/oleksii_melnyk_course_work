@@ -1,7 +1,6 @@
 // var axios = require('axios');
 
 function getVorks(interest){
-		console.log(findGetParameter('interest'));
 		if(findGetParameter('interest')!=''&&findGetParameter('interest')!='undefined'&&findGetParameter('interest')!='null'){
 			httpGetAsync(`/getVorksQuery?interest=${findGetParameter('interest')}`,renderVorks);
 		}
@@ -18,12 +17,9 @@ function renderVorks(res,err){
 			console.log(res);
 			return 0;
 		}
-		// console.log(res);
 		let vorks = JSON.parse(res);
-		// console.log();
 		for (let vork in vorks){
 		let location = JSON.parse(vorks[vork].vork_location);
-		// console.log(location);
 		let country ='';
 		let region = '';
 		let city = '';
@@ -49,7 +45,6 @@ function renderVorks(res,err){
 		let formatted_date = date.getFullYear() + 
 		"-" + (date.getMonth() + 1) + 
 		"-" + date.getDate();
-		console.log(vorks[vork]);
 		let htmlVork= 
 		`
 		<div class="vork d-flex flex-wrap flex-md-nowrap  flex-lg-nowrap justify-content-center  w-100 m-3 border-bottom"  >
@@ -84,40 +79,13 @@ function renderVorks(res,err){
 	}
 
 function subscribeUserToVork(data){
-	// console.log(data);
 	httpPostAsync('/subscribeUser',"data="+data,function(rows,error){
-		// console.log(data);
 		if(error){
 			alert("Error!");
 			return 0;
 		}
 		alert("Subscribed!");
 	});
-}
-
-function httpGetAsync(theUrl, callback){
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.onreadystatechange = function() { 
-		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-		    callback(xmlHttp.responseText);
-	}
-	xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-	xmlHttp.send(null);
-}	
-
-function httpPostAsync(url,data,callback){
-	console.log(data);
-
-	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.open('POST',url,true);
-	xmlHttp.setRequestHeader("Content-Type", 
-		"application/x-www-form-urlencoded");
-	xmlHttp.onreadystatechange = function() { 
-		if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-		    callback(xmlHttp.responseText);
-	}
-	xmlHttp.send(`interest=${data}`);
-	console.log();
 }
 
 function findGetParameter(parameterName) {
@@ -131,4 +99,25 @@ function findGetParameter(parameterName) {
           if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
         });
     return result;
+}
+
+function addFilter(){
+	httpGetAsync('/getInterestsQuery',function(res,err){
+		if(err){
+			alert('Error');
+			console.log(err);
+			return;
+		}
+		console.log(res);
+		let interests = JSON.parse(res);
+		for (let i in interests){
+			let interest = 
+			`
+			<li class="d-flex justify-content-center p-1">
+			<a href="#" onclick="redirectTo('/find_vorks.html?interest=${interests[i].interest}')" class="text-center">${interests[i].interest}</a>
+			</li>
+			`;
+			$('.dropdown-interests').append(interest);
+		}
+	});
 }

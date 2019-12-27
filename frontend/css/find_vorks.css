@@ -30,3 +30,7 @@ main{
 	border-style: none none solid none;
 	border-color: var(--header-color);
 }
+
+.show-on-hover:hover > ul.dropdown-menu {
+    display: block;    
+}
