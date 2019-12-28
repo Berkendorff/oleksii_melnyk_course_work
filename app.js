@@ -93,6 +93,14 @@ router.get('/add_vork.html', function (req, res) {
    authorisationUser(req);
    res.sendFile( __dirname + "/" +  html + "add_vork.html");  
 });
+router.get('/about_us.html', function (req, res) {  
+   authorisationUser(req);
+   res.sendFile( __dirname + "/" +  html + "about_us.html");  
+});
+router.get('/contacts.html', function (req, res) {  
+   authorisationUser(req);
+   res.sendFile( __dirname + "/" +  html + "contacts.html");  
+});
 /*
 Send  css
 */
@@ -196,7 +204,7 @@ router.get('/getInterestsQuery',function(req,res){
          });
 });
 
-router.get('/getVorksQuery',function (req, res) {  
+router.get('/getVorksQuery',function (req, res) {   
   // console.log(url.parse(req.url,true).query!);
   let interest = url.parse(req.url,true).query.interest;
   console.log("interest " + interest);

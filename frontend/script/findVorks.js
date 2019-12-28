@@ -37,7 +37,7 @@ function renderVorks(res,err){
 			locationhtml = '';
 		}
 		else{
-			locationhtml = `<p class="col-5 rounded m-2 text-white text-center">Location: 
+			locationhtml = `<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Location: 
 					${country} ${region} ${city}
 					</p>`;
 		}
@@ -45,6 +45,19 @@ function renderVorks(res,err){
 		let formatted_date = date.getFullYear() + 
 		"-" + (date.getMonth() + 1) + 
 		"-" + date.getDate();
+
+		let buttons = `
+			<div class="col-12 d-flex  justify-content-center">
+						<form method="post" action="/deleteVork" onsubmit="return false;" class="m-1">
+							<button class="btn btn-danger" type="submit">&nbsp;&nbsp;&nbsp;Delete&nbsp;&nbsp;&nbsp;</button>
+							<input class="d-none" type="text" name="data" value="${vorks[vork].vork_id}">  
+						</form> 
+						<form method="post" action="/subscribeUser" onsubmit="" class="m-1">
+							<button class="btn btn-primary" type="submit">Subscribe</button>
+							<input class="d-none" type="text" name="data" value="${vorks[vork].vork_id}">  
+						</form> 
+					</div>
+		`;
 		let htmlVork= 
 		`
 		<div class="vork d-flex flex-wrap flex-md-nowrap  flex-lg-nowrap justify-content-center  w-100 m-3 border-bottom"  >
@@ -52,22 +65,16 @@ function renderVorks(res,err){
 				<img src="https://loremflickr.com/320/240/${vorks[vork].vork_name}" alt="" class="vork-img rounded-left rounded	border-primary">
 			</div>
 			<div class="d-flex flex-wrap w-100">
-				<div class="col-12 d-flex flex-wrap align-items-center flex-wrap vork-info justify-content-center justify-content-md-between justify-content-lg-between">
-					<p class="col-5 rounded m-2 text-white font-weight-bold text-center">Vork: ${vorks[vork].vork_name}</p>
-					<p class="col-5 rounded m-2 text-white text-center">Created: ${formatted_date}</p>
-					<p class="col-5 rounded m-2 text-white text-center">Desc: ${vorks[vork].vork_desc}</p>
-					<p class="col-5 rounded m-2 text-white text-center">Needs: ${vorks[vork].vork_needs}</p>
-					<p class="col-5 rounded m-2 text-white text-center">Vorker: ${vorks[vork].user_name}</p>
-					<p class="col-5 rounded m-2 text-white text-center">Email: ${vorks[vork].user_email}</p>
-					
+				<div class="col-12 d-flex flex-wrap align-items-center flex-wrap vork-info justify-content-center s">
+					<p class="col-5 rounded m-1 pl-5 pr-5 text-white font-weight-bold text-center">Vork: ${vorks[vork].vork_name}</p>
+					<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Created: ${formatted_date}</p>
+					<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Desc: ${vorks[vork].vork_desc}</p>
+					<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Needs: ${vorks[vork].vork_needs}</p>
+					<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Vorker: ${vorks[vork].user_name}</p>
+					<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Email: ${vorks[vork].user_email}</p>
 					${locationhtml}
-					<p class="col-5 rounded m-2 text-white text-center">Status: ${vorks[vork].vork_status}</p>
-					<div class="col-12 d-flex justify-content-md-end justify-content-center">
-						<form method="post" action="/subscribeUser" onsubmit="">
-							<button class="btn btn-primary" type="submit">Subscribe</button>
-							<input class="d-none" type="text" name="data" value="${vorks[vork].vork_id}">  
-						</form> 
-					</div>
+					<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Status: ${vorks[vork].vork_status}</p>
+					${buttons}
 				</div>
 
 			</div>

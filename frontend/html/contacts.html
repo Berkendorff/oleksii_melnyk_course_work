@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="../css/variables.css">
 	<link rel="stylesheet" href="../css/required.css">
 	<link rel="stylesheet" href="../css/header.css">
-	<link rel="stylesheet" href="../css/add_vork.css">
+	<link rel="stylesheet" href="../css/main.css">
 	<link rel="stylesheet" href="../css/footer.css">
 
 	<link rel="icon" type="img" href="../img/logo.png">
@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">		
     <link href="https://fonts.googleapis.com/css?family=PT+Sans|Raleway&amp;display=swap" rel="stylesheet">
 </head>
-<body  onload="correctNavBar(); getInterests();">
+<body  onload="correctNavBar();">
 <!-- 
 Modal Menu Log in
  -->
@@ -102,7 +102,7 @@ Modal Menu Sign Up
 	</div>
 
 	<header class="m-0 p-0">
-		<div class="container d-flex justify-content-center align-content-center flex-wrap p-2 text-light">
+		<div class="container d-flex justify-content-between align-content-center flex-wrap p-2 text-light">
 			<div class="container d-flex justify-content-center align-items-center">
 				<div class="d-flex w-100 justify-content-sm-between  justify-content-md-between justify-content-center flex-wrap" >
 					<a href=" index.html" class="logo text-light d-block order-first">
@@ -141,60 +141,42 @@ Modal Menu Sign Up
 		</div> 
 	</div>  
 	</header>
-	<main class="p-2 bg-motivation">
-		
-		<div class="container">
-			<form action="/add_vork" method="POST" class="">
-				<div class="image-container">
-                    <img src="../img/logo.png" id="imgProfile" style="width: 150px; height: 150px; background-color: var(--header-color);" class="img-thumbnail" />
-                   <!--  <div class="middle">
-                        <input type="button" class="btn btn-secondary" id="btnChangePicture" value="Change" />
-                        <input type="file" style="display: none;" id="vorkPicture" name="file" />
-                    </div> -->
-                </div>
-				<div class="form-group">
-					<label for="inputVorkName" class="">Vork name<span class="text-danger">*</span></label>
-					<input maxlength="256" name="vork_name"  type="text" class="form-control" id="inputVorkName" aria-descridby="vorknameHelp" placeholder="New wheel" required="true">
-					<small id="vorknameHelp" class="form-text text-muted">Enter vork name</small>
-				</div>
-				<div class="form-group">
-					<label for="inputVorkDesc" class="">Description</label>
-					<textarea name="vork_desc" rows="1" maxlength="512" name="vork_desc" type="textarea" class="form-control inputVorkDesc" id="inputVorkDesc" aria-descridby="vorkDescHelp" placeholder="wheel&co" style="resize: none;" placeholder="This is hard vork"></textarea>
-					<small id="vorkDescHelp" class="form-text text-muted">Less than 512 characters</small>
-				</div>
-				<div class="form-group">
-					<label for="inputVorkCountry" class="">Country</label>
-					<input maxlength="256" name="country"  type="text" class="form-control" id="inputCountry" aria-descridby="countryHelp" placeholder="Ukraine">
-					<small id="countryHelp" class="form-text text-muted">Enter vork country</small>
-				</div>
-				<div class="form-group">
-					<label for="inputVorkRegion" class="">Region</label>
-					<input maxlength="256" name="region"  type="text" class="form-control" id="inputregion" aria-descridby="countryHelp" placeholder="Kyiv">
-					<small id="regionHelp" class="form-text text-muted">Enter vork region</small>
-				</div>
-				<div class="form-group">
-					<label for="inputVorkCity" class="">City</label>
-					<input maxlength="256" name="city"  type="text" class="form-control" id="inputCity" aria-descridby="CityHelp" placeholder="Kyiv">
-					<small id="CityHelp" class="form-text text-muted">Enter vork city</small>
-				</div>
-				<div class="form-group">
-					<label for="inputVorkNeeds" class="">Needs</label>
-					<input maxlength="256" name="vork_needs"  type="text" class="form-control" id="inputVorkNeeds" aria-descridby="vorkneedsHelp" placeholder="another wheel">
-					<small id="vorkneedsHelp" class="form-text text-muted">Enter vork needs</small>
-				</div>
-				<div class="form-group form-check interests-checkbox d-flex justify-content-between flex-wrap" onload="getInterests()">
 
+	<main class="m-0 p-0">
+		<!-- <section class="description p-2 imgs-1">
+			<div class="d-flex justify-content-center flex-wrap">
+				<h1 class="col-12 text-center text-white" style="font-size: 4rem;">Vorks</h1>
+				<div class="col-12 d-flex justify-content-center text-center">
+					<div class=" dedication rounded text-white m-1 p-2" style="font-size: 1.5rem;">
+						The project "Volunteers&nbsp;works" is dedicated to common sense.
+					</div>
 				</div>
-				<div class="d-flex justify-content-center">
-					<button type="submit" class="btn btn-primary m-2">Submit</button>
+				<div class="d-flex flex-wrap justify-content-center vork-tags align-items-center ">
+					<div class=" container m-3 text-light text-center">
+						<span class="p-2 rounded  vork-tag">We are have little planet.</span>
+					</div>
+					<div class=" container m-3 text-light text-center"">
+						<span class="p-2 rounded  vork-tag">Everybody have big power.</span>
+					</div>
+				<div class=" container m-3 text-light text-center"">
+						<span class="p-2 rounded  vork-tag">Don`t let the Earth die.</span>
+					</div>
+					<div class=" container m-3 text-light text-center"">
+						<span class="p-2 rounded  vork-tag">Make our home great again.</span>
+					</div>
 				</div>
-
-			</form>
+				
+			</div>
+		</section> -->
+		<div class="d-flex justify-content-center flex-wrap m-0 p-3">
+			
+			<div class=" container text-center text-white p-1 m-2 rounded bg-header font-weight-bold"> If you have any questions - write to the HelpDesc: <i class="" type="email">vorks.helpdesc@gmail.com</i></div>
+			<div class="col-12 d-flex justify-content-center">
+				<img src="https://loremflickr.com/320/240/help" alt="help">
+			</div>
 		</div>
-
-
-
-	</main>	
+		<section class="imgs-3"></section>
+	</main>
 
 	<footer class="p-2 m-0">
 		<div class="d-flex justify-content-center text-white ">
@@ -204,7 +186,7 @@ Modal Menu Sign Up
 		</div>
 	</footer>
 	<script type="text/javascript" src="../script/require.js"></script>
-	<script type="text/javascript" src="../script/add_vork.js"></script>
+	<script type="text/javascript" src="../script/index.js"></script>
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
