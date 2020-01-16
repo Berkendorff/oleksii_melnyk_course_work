@@ -12,14 +12,14 @@ main{
 }
 
 .vork-img{
-	width: 100%;
+	/* min-width: 100px; */
 	max-width: 600px;
 	/*border:1px none solid none none ;*/
-	height: 100%;
+	/* min-height: 100px; */
 	max-height: 600px;
 	/*max-width: 400px;*/
 	/*height: 200px;*/
-	background-color: var(--header-color );	
+	/* background-color: var(--header-color );	 */
 }
 
 .vork-info>p{
@@ -34,3 +34,23 @@ main{
 .show-on-hover:hover > ul.dropdown-menu {
     display: block;    
 }
+
+.vork-button{
+	align-self: flex-end;
+}
+
+@media only screen and (max-width: 320px) {
+
+	body { 
+	   font-size: 2em; 
+	}
+ 
+ }
+
+ @media only screen and (max-width: 480px) {
+
+	body { 
+	   font-size: 2em; 
+	}
+ 
+ }

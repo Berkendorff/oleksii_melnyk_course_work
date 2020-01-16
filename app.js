@@ -14,7 +14,6 @@ const registerController=require('./controllers/register-controller');
 
 const Cryptr = require('cryptr');
 cryptr = new Cryptr('MyVrySecr');
-// console.log(cryptr);
 
 var app = express();
 
@@ -38,31 +37,12 @@ app.use(session({
 
 /* route to handle login and registration */
 router.post('/api/register',register);
-// router.post('/api/authenticate',authenticateController.authenticate);
 router.post('/api/authenticate',authenticateUser);
  
 console.log(authenticateController);
 router.post('/controllers/register-controller', register);
-// router.post('/controllers/authenticate-controller', authenticateController.authenticate);
 router.post('/controllers/authenticate-controller', authenticateUser);
 
-
-
-/*
-Send html
-*/
-
-// app.get('/', function(req, res){
-//    if(req.session.page_views && req.session.email){
-
-//       req.session.page_views++;
-//       res.send("You visited this page " + req.session.page_views + " times, with email " + req.session.email);
-//    } else {
-//       req.session.page_views = 1;
-//       req.session.email = "alexeym00@gmail.com";
-//       res.send("Welcome to this page for the first time!");
-//    }
-// });
 
 router.get('/cookie',sendCookie);
 router.get('/logout',destroySession);
@@ -101,6 +81,7 @@ router.get('/contacts.html', function (req, res) {
    authorisationUser(req);
    res.sendFile( __dirname + "/" +  html + "contacts.html");  
 });
+
 /*
 Send  css
 */
@@ -136,6 +117,7 @@ router.get('/css/add_vork.css', function (req, res) {
 /*
 Send img
 */
+
 router.get('/img/logo.png', function (req, res) {  
    res.sendFile( __dirname + "/" + img + "logo.png" );  
 });
@@ -169,9 +151,11 @@ router.get('/img/agro.png', function (req, res) {
 router.get('/img/dropdown.png', function (req, res) {  
    res.sendFile( __dirname + "/" + img + "dropdown.png" );  
 });
+
 /*
 Send js
 */
+
 router.get('/script/findVorks.js', function (req, res) {  
    res.sendFile( __dirname + "/" + js + "findVorks.js" );  
 });
@@ -188,9 +172,11 @@ router.get('/script/profile.js', function (req, res) {
 router.get('/script/index.js', function (req, res) {  
    res.sendFile( __dirname + "/" + js + "index.js" );
 });
+
 /*
 Req with sql
 */
+
 router.get('/getInterestsQuery',function(req,res){
   mysql.query('select * from interests;', 
       function(err,rows, fields){
@@ -205,10 +191,7 @@ router.get('/getInterestsQuery',function(req,res){
 });
 
 router.get('/getVorksQuery',function (req, res) {   
-  // console.log(url.parse(req.url,true).query!);
   let interest = url.parse(req.url,true).query.interest;
-  console.log("interest " + interest);
-  console.log(interest=='null');
 
   if(interest!=''&&interest!='undefined'&&interest!='null'){
  mysql.query(`select * from interests as i join vorks_interests as vi join vorks as v join users u          
@@ -221,6 +204,7 @@ router.get('/getVorksQuery',function (req, res) {
                res.redirect('/find_vorks.html');
                throw err;
             }
+
             res.writeHead(200,{'Content-type':'text/plain'});
             res.end(JSON.stringify(rows));            
          });
@@ -230,46 +214,36 @@ router.get('/getVorksQuery',function (req, res) {
     where (v.vork_creator_id = u.user_id )  
     order by vork_date desc limit 32;`, 
       function(err,rows, fields){
-        // console.log(rows);
             if (err) {
               console.log(err);
                res.writeHead(404,{'Content-type':'text/html'});
                res.redirect('/find_vorks.html');
                throw err;
                return;
-            }
-            // console.log(rows);
+            };
             res.writeHead(200,{'Content-type':'text/plain'});
             res.end(JSON.stringify(rows));            
          });
   }
 });
 
-// router.post('/getVorksQuery',function (req, res) {  
-//   console.log(req.body.interest);
-//   //  mysql.query(`select * from interests as i join vorks_interests as vi join vorks as v                ###########################3
-//   // where (i.interest = '${req.body.interest}' and vi.interest_id = i.interest_id and v.vork_id=vi.vork_id) 
-//   // order by vork_date desc limit 32;`, 
-//   //     function(err,rows, fields){
-//   //       console.log('in callback');
-//   //           if (err) {
-//   //             console.log('error');
-//   //              res.writeHead(404,{'Content-type':'text/html'});
-//   //              res.redirect('/find_vorks.html');
-//   //              throw err;
-//   //           }
-//   //           // console.log(rows);
-//   //           console.log('return values');
-//   //           console.log(rows);
-//   //           res.writeHead(200,{'Content-type':'text/plain'});
-//   //           // res.redirect('/find_vorks.html')
-//   //           res.end(JSON.stringify(rows));            
-//   //        });
-//   req.session.interest = req.body.interest;
-//   console.log(req.session);
-//   res.end('/find_vorks.html');
 
-// });
+router.get('/getInterestsForVork',function(req,res){
+  let vork_id = url.parse(req.url,true).query.vork_id;
+  var interests = '';
+  mysql.query(`select interest from vorks_interests vi inner 
+    join interests i where (vi.vork_id = "${vork_id}" and i.interest_id = vi.interest_id);`,function(err,rows){
+    if(err){
+      console.log(err);
+      return;
+    }
+    interests = rows;
+    res.writeHead(200,{'Content-type':'text/plain'});
+    res.end(JSON.stringify(interests));
+    
+  });
+
+});
 
 router.get('/loadProfile',function(req,res){
 if (req.session.auth){
@@ -279,10 +253,9 @@ if (req.session.auth){
      mysql.query(`select * from users where user_email = "${decode}"`,function(err,rows){
         if(err){
           res.writeHead(404,{'Content-type':'text/html'});
-               res.end("Error");
+          res.end("Error");
           console.log(err);
         }
-            // console.log(rows);
             res.writeHead(200,{'Content-type':'text/plain'});
             res.end(JSON.stringify(rows[0]));
           });
@@ -293,7 +266,6 @@ if (req.session.auth){
  
 router.post('/add_vork',function(req,res){
   if (req.session.auth){
-    console.log(req.body);
      let user_id = '';
      let token = req.session.token;
      let token_id = req.session.token_id;
@@ -308,7 +280,6 @@ router.post('/add_vork',function(req,res){
 });
 
 router.post('/subscribeUser',function(req,res){
-  console.log(req.body);
     if(req.body!=''&&req.session.auth&&req.body.data.length<20){
         mysql.query(`insert into users_vorks(user_id,vork_id) 
           values("${cryptr.decrypt(req.session.token_id)}","${req.body.data}");`,function(err,rows){
@@ -328,7 +299,6 @@ router.post('/subscribeUser',function(req,res){
 
 function addVork(req,user_id){
   let body = req.body;
-  console.log(body);
   let location={};
   if(body.country!='undefined' && body.country!=''){
     location.country=body.country;
@@ -340,8 +310,6 @@ function addVork(req,user_id){
     location.city=body.city;
   }
 
-  // console.log(location);
-  // console.log(JSON.stringify(location));
   mysql.query(`call app_add_vork(
     "${user_id}",
     "${body.vork_name}",
@@ -366,7 +334,6 @@ function addVork(req,user_id){
           console.log(keys);
           for (let key in keys){
               if(!keys[key].match(/[^0-9]/)){
-                console.log(keys[key]+" !!!");
                 mysql.query(`insert into vorks_interests(vork_id,interest_id) values("${rows[0].vork_id}","${keys[key]}");`)
               }
           }
@@ -481,7 +448,6 @@ function emailExists(email){
 
 function register (req,res){
   var today = new Date();
-  console.log(emailExists(req.body.user_email));
 
   if (!emailExists(req.body.user_email)){
     var encryptedString = cryptr.encrypt(req.body.user_password);

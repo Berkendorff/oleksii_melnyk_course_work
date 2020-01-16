@@ -15,60 +15,6 @@ const Index = html + 'index.html';
 const BadGateWay = html + 'test.html';
 const restrictedDirs = ['src'];
 
-
-// var loginUserSQL = `loginUser("${userEmail}", "${userPassword}")`;
-// var queryLoginUser = `select ${loginUserSQL};` ;
-
-// var userEmail = "berk@gmail.com";
-// var userPassword = "1234556";
-
-/*OLD SERVER!!!!!!!!!!!!!!!!!!!!
-
-http.createServer(function (req, res){
-	log(req.url + ' = '+req.url.replace('/',''));
-	try{
-		let reqUrl = req.url.replace('/', '');
-		/
-		HANDLING REQUESTS 
-		/
-
-		if(StrIncld(reqUrl,'getVorksQuery')){
-			getVorks();
-			return;
-		}
-
-		/
-		Send files!
-		/
-
-		if((FileExists(reqUrl) || reqUrl === '') && !RestrictedDir(reqUrl)){
-			log(reqUrl + ' - exists : ' + FileExists(reqUrl));
-			res.writeHead(200, {'Content-Type': ContentTypeOfUrl(req.url)});
-			if ( reqUrl === ''){
-				fs.createReadStream(htmlIndex).pipe(res);
-			} else{
-				if (StrIncld(reqUrl,'find_vorks.html')){
-
-				}
-
-
-				fs.createReadStream(reqUrl).pipe(res);
-			}
-		} else {
-			log(reqUrl + ' - exists : ' + FileExists(reqUrl));
-			res.writeHead(404, {'Content-Type': 'text/html'});
-			fs.createReadStream(htmlBadGateWay).pipe(res);
-		}	
-	}
-	catch(err){
-		res.writeHead(404, {'Content-Type': 'text/html'});
-		fs.createReadStream(htmlBadGateWay).pipe(res);
-		log(err);
-	}
-}).listen(port); 
-*/
-
-
 function StrIncld(url,substr){
 	if (url.indexOf(substr)>=0){
 		return 1;

@@ -1,5 +1,3 @@
-// var axios = require('axios');
-
 function getVorks(interest){
 		if(findGetParameter('interest')!=''&&findGetParameter('interest')!='undefined'&&findGetParameter('interest')!='null'){
 			httpGetAsync(`/getVorksQuery?interest=${findGetParameter('interest')}`,renderVorks);
@@ -13,8 +11,6 @@ function getVorks(interest){
 function renderVorks(res,err){
 		if (err) {
 			alert("Error!");
-			console.log(err);
-			console.log(res);
 			return 0;
 		}
 		let vorks = JSON.parse(res);
@@ -37,7 +33,7 @@ function renderVorks(res,err){
 			locationhtml = '';
 		}
 		else{
-			locationhtml = `<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Location: 
+			locationHtml = `<p class="col-12 rounded m-1 pl-2 pr-5 text-white">Location: 
 					${country} ${region} ${city}
 					</p>`;
 		}
@@ -45,9 +41,10 @@ function renderVorks(res,err){
 		let formatted_date = date.getFullYear() + 
 		"-" + (date.getMonth() + 1) + 
 		"-" + date.getDate();
+		let interests = "";
 
 		let buttons = `
-			<div class="col-12 d-flex  justify-content-center">
+			<div class="col-12 d-flex  justify-content-center vork-actions">
 						<form method="post" action="/deleteVork" onsubmit="return false;" class="m-1">
 							<button class="btn btn-danger" type="submit">&nbsp;&nbsp;&nbsp;Delete&nbsp;&nbsp;&nbsp;</button>
 							<input class="d-none" type="text" name="data" value="${vorks[vork].vork_id}">  
@@ -60,30 +57,44 @@ function renderVorks(res,err){
 		`;
 		let htmlVork= 
 		`
-		<div class="vork d-flex flex-wrap flex-md-nowrap  flex-lg-nowrap justify-content-center  w-100 m-3 border-bottom"  >
-			<div class="d-flex justify-content-center">
-				<img src="https://loremflickr.com/320/240/${vorks[vork].vork_name}" alt="" class="vork-img rounded-left rounded	border-primary">
-			</div>
-			<div class="d-flex flex-wrap w-100">
-				<div class="col-12 d-flex flex-wrap align-items-center flex-wrap vork-info justify-content-center s">
-					<p class="col-5 rounded m-1 pl-5 pr-5 text-white font-weight-bold text-center">Vork: ${vorks[vork].vork_name}</p>
-					<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Created: ${formatted_date}</p>
-					<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Desc: ${vorks[vork].vork_desc}</p>
-					<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Needs: ${vorks[vork].vork_needs}</p>
-					<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Vorker: ${vorks[vork].user_name}</p>
-					<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Email: ${vorks[vork].user_email}</p>
-					${locationhtml}
-					<p class="col-5 rounded m-1 pl-5 pr-5 text-white text-center">Status: ${vorks[vork].vork_status}</p>
-					${buttons}
+		<div class="vork d-flex flex-wrap w-100 justify-content-center col-12 col-sm-12 col-md-5 col-lg-3 m-1 border-bottom vork_block_${vorks[vork].vork_id}" >
+			<div class="vork_block d-flex col-12 flex-wrap">
+				<div class="d-flex justify-content-center col-12 vork-img">
+					<img src="https://loremflickr.com/320/240/${vorks[vork].vork_name}" alt="" class="vork-img rounded-left rounded	border-primary m-1">
 				</div>
-
+				<div class="d-flex flex-wrap ">
+					<div class="col-12 d-flex flex-wrap align-items-center flex-wrap vork-info justify-content-center vork_${vorks[vork].vork_id}">
+						<p class="col-12 rounded m-1 p-1 text-white font-weight-bold ">Vork: ${vorks[vork].vork_name}</p>
+						<p class="col-12 rounded m-1 p-1 text-white ">Created: ${formatted_date}</p>
+						<p class="col-12 rounded m-1 p-1 text-white ">Desc: ${vorks[vork].vork_desc}</p>
+						<p class="col-12 rounded m-1 p-1 text-white ">Needs: ${vorks[vork].vork_needs}</p>
+						<p class="col-12 rounded m-1 p-1 text-white ">Vorker: ${vorks[vork].user_name}</p>
+						<p class="col-12 rounded m-1 p-1 text-white ">Email: ${vorks[vork].user_email}</p>
+						${locationHtml}
+						<p class="col-12 rounded m-1 p-1 text-white " id="status_${vorks[vork].vork_id}">Status: ${vorks[vork].vork_status}</p>			
+					</div>
+				</div>
 			</div>
 		</div>
 		`;
 		$('.canvas').append(htmlVork);
+		loadInterestsForVork(vorks[vork].vork_id);
+		$(`.vork_block_${vorks[vork].vork_id}`).append(buttons);
 		}
 		
 	}
+
+function loadInterestsForVork(vork_id){
+	httpGetAsync(`/getInterestsForVork?vork_id=${vork_id}`,function(res,err){
+		let interests = JSON.parse(res);
+		var html = `<p class="col-12 rounded m-1 pl-2 pr-5 text-white vork-button align-items-end"> Interests: `;
+		for(let i in interests){	
+			html += interests[i].interest + "  ";
+		}
+		html+="</p>";
+		$(`#status_${vork_id}`).after(html);
+	});
+}
 
 function subscribeUserToVork(data){
 	httpPostAsync('/subscribeUser',"data="+data,function(rows,error){
@@ -108,14 +119,13 @@ function findGetParameter(parameterName) {
     return result;
 }
 
+
 function addFilter(){
 	httpGetAsync('/getInterestsQuery',function(res,err){
 		if(err){
 			alert('Error');
-			console.log(err);
 			return;
 		}
-		console.log(res);
 		let interests = JSON.parse(res);
 		for (let i in interests){
 			let interest = 
